@@ -8,8 +8,8 @@ const url = "http://localhost:3001"
  */
 export function login(username, password) {
     const token = localStorage.getItem("token")
-    if(!token) { 
-        return false
+    if(token) {
+        return new Promise(true)
     }
     return axios.post(url + "/users/login", {
         email: username,

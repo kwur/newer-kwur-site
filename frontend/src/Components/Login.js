@@ -11,6 +11,9 @@ const Login = () => {
             if(result.error === '"incorrect password"') {
                 alert("That's not the right password!")
             }
+            else if(result.error === "failed to serialize user") {
+                alert("Email does not exist")
+            }
             else {
                 nav("/dashboard")
             }

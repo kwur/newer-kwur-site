@@ -4,14 +4,13 @@ import Header from "./Header"
 const Home = () => {
     const token = localStorage.getItem("token")
     const nav = useNavigate()
-    if(token) {
-        nav("/dashboard")
-    }
     return (
         <>
             <Header />
-            <div>
-                KWUR 90.3 FM
+            <div className="flex justify-center">
+                <div className="font-header text-6xl pt-10  w-fit justify-center">
+                    KWUR 90.3 FM
+                </div>
             </div>
         </>
     )
