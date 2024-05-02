@@ -6,7 +6,7 @@ const Login = () => {
         e.preventDefault()
         const username = e.target.username.value
         const password = e.target.password.value
-        login(username, password).then(result => {
+        login(username, password).then(result => { 
             console.log("Login result", result)
             if(result.error === '"incorrect password"') {
                 alert("That's not the right password!")

@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router"
-import Header from "./Header"
-import Login from "./Login"
-import Signup from "./Signup"
+import Header from "./Header" 
 
 const Home = () => {
     const token = localStorage.getItem("token")

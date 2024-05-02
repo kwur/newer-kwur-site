@@ -12,7 +12,7 @@ const Signup = () => {
             console.log("Login result", result)
             if(result === false) {
                 alert("NOPE!")
-            }
+            } 
             if(result === "exists") {
                 alert("user already exists. sorry buddy")
             }
