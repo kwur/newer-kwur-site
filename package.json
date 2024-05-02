@@ -1,0 +1,11 @@
+{
+    "name": "newer-kwur-site",
+    "scripts": {
+        "build": "cd frontend && npm run build",
+        "test": "concurrently \"cd frontend && npm start \" \"cd backend && nodemon server.js \""
+    },
+    "dependencies": {
+        "htmx": "^0.0.2",
+        "htmx.org": "^1.9.12"
+    }
+}
