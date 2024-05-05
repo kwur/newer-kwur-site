@@ -9,7 +9,7 @@ const url = "http://localhost:3001"
 export function login(username, password) {
     const token = localStorage.getItem("token")
     if(token) {
-        return new Promise(true)
+        return Promise.resolve(true)
     }
     return axios.post(url + "/users/login", {
         email: username,
@@ -27,11 +27,16 @@ export function login(username, password) {
         return e.response.data
     })
 }
+
+/**
+ * Attempts to create a user with the given credentials
+ * @param first 
+ * @param last 
+ * @param username 
+ * @param password 
+ * @returns true if successful, "error" if the user is already existing, false otherwise
+ */
 export function signup(first, last, username, password) {
-    const token = localStorage.getItem("token")
-    if(!token) {
-        return false
-    }
     return axios.post(url + "/users/signup", {
         firstName: first,
         lastName: last,
@@ -47,5 +52,29 @@ export function signup(first, last, username, password) {
             return "exists"
         }
         return false
+    })
+}
+/**
+ * Get the user based off of the stored token
+ * @returns user if successful, null otherwise
+ */
+export function getLoggedInUser() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.get(url + "/users/profile", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        const user = result.data.user
+        if(user) {
+            return user
+        }
+        return null
+    }).catch(e => {
+        console.log("Error in getting logged in user:", e)
+        return null
     })
 }

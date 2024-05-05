@@ -3,12 +3,25 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     fontFamily: {
-      header: ['"Kode Mono"', 'monospace']
+      // header: ['"FuzzySlippers"', 'monospace'],
+      subtitle: ['"Subtitle"', 'monospace'],
+      other: ['"Try"', 'monospace'],
+      // subtitle: ["devils-haircut", "sans-serif"],
+      mono: ['"Kode Mono"', 'monospace'],
+      header: ["burnaby-stencil", 'sans-serif'],
     },
     extend: {
       backgroundImage: {
         "logoblack": "url('../public/kwurblack.svg');",
-        "logored": "url('../public/kwurred.svg');"
+        "logored": "url('../public/kwurred.svg');",
+        "show": "url('../public/show_password.svg');",
+        "hide": "url('../public/hide_password.svg');"
+      },
+      fontSize: {
+        "bigasfuck": "10rem;"
+      },
+      colors: {
+        "background": "#f0f0f0;"
       }
     },
   },

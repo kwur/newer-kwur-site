@@ -35,11 +35,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "DJ",
     },
+    credits: {
+      type: Number,
+      default: 0
+    }
   },
   { timestamps: true }
 );
 
-// Hash the password before saving it to the database
+// hash the password before saving it to the database
 userSchema.pre("save", function (next) {
     const user = this;
     if (!user.isModified("password")) {
@@ -53,7 +57,7 @@ userSchema.pre("save", function (next) {
     }).catch(e => next(e));
 });
 
-// Compare the given password with the hashed password in the database
+// compare the given password with the hashed password in the database
 userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password).then((res) =>{
     return res

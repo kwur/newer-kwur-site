@@ -1,5 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities; 
+@font-face {
+    font-family: FuzzySlippers;
+    src: url("../public/VTCFuzzypunkyslippers.ttf");
+}
+@font-face {
+    font-family: Subtitle;
+    src: url("../public/Blok.ttf");
+}
+@font-face {
+    font-family: Try;
+    src: url("../public/PicNic-Regular.otf");
+}
+@import url("https://use.typekit.net/abq8jap.css");
+@import url("https://use.typekit.net/qcu4zrh.css");
+@import url("https://use.typekit.net/fei0gky.css");
 @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@700&display=swap');

@@ -5,6 +5,7 @@ import Home from './Components/Home';
 import Dashboard from './Components/Dashboard';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import Scheduler from './Components/Scheduler';
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dj/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/dj/scheduler" element={<Scheduler />} />
       </Routes>
     </Router>
   );
