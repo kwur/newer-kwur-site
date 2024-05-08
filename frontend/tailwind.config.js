@@ -15,7 +15,9 @@ module.exports = {
         "logoblack": "url('../public/kwurblack.svg');",
         "logored": "url('../public/kwurred.svg');",
         "show": "url('../public/show_password.svg');",
-        "hide": "url('../public/hide_password.svg');"
+        "hide": "url('../public/hide_password.svg');",
+        "more": "url('../public/show-more.svg');",
+        "less": "url('../public/show-less.svg');"
       },
       fontSize: {
         "bigasfuck": "10rem;"

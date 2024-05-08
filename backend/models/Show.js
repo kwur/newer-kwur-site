@@ -6,11 +6,16 @@ const showSchema = new mongoose.Schema(
         userId: {
             type: String,
             required: true,
-            unique: true,
+            unique: true, // can one user have more than one show? 
         },
         coDJ: {
             type: Object,
             required: false
+        },
+        genre: {
+            type: String,
+            required: true,
+            default: "ND"
         },
         showName: {
             type: String,

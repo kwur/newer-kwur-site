@@ -2,103 +2,20 @@ const express = require("express")
 const sendEmail = require("../sendEmail")
 const tokenModel = require("../models/Token")
 const JWT = require("jsonwebtoken")
+const passport = require("passport")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
 const userModel = require("../models/User")
-const passport = require("passport")
 const Strategy = require("passport-local").Strategy
 const JWTstrategy = require("passport-jwt").Strategy
 const JWTextract = require("passport-jwt").ExtractJwt
 
 const router = express.Router()
-    
-
-// setup passport
-router.use(passport.initialize()) // setup
-router.use(passport.session()) // keep local sessions
-router.use(function (req, res, next) {
-    res.locals.currentUser = req.user;
-    next();
-})
-const strategy = new Strategy(userModel.authenticate())
-passport.use(strategy);
-passport.serializeUser((user, next) => { // take the user info that is currently in JSON form and encrypt user information in the form of JWT
-    next(null, user._id)
-})
-passport.deserializeUser((id, next) => { // go from encrypted data and return the user JSON object
-    userModel.findById(id).then((user) => { // look in the collection for a user with the given id
-        return next(null, user)
-    }).catch(e => next(e, null))
-})
-passport.use("jwt", new JWTstrategy({
-    secretOrKey: process.env.JWT_SECRET,
-    jwtFromRequest: JWTextract.fromAuthHeaderAsBearerToken()
-},
-    (token, next) => {
-        userModel.findOne({ _id: token.userId }).then((user) => {
-            return next(null, user)
-        }).catch(error => {
-            return next(error)
-        })
-    }
-))
-
-passport.use("login", new Strategy({
-    usernameField: "email",
-    passwordField: "password",
-    passReqToCallback: true
-},
-    (req, email, password, next) => { // create a strategy for authentication, setup what we will do during auth 
-        userModel.findOne({ email: email }).then((user) => {
-            if (!user) {
-                return next(null, null, { message: "this email does not have as associated account" })
-            }
-            user.comparePassword(password)
-                .then((res) => {
-                    if (res === undefined) {
-                        return next("something went wrong while comparing")
-                    }
-                    if (res === false) {
-                        return next("incorrect password")
-                    }
-                    return next(null, user, null)
-                }).catch(e => next(e, null, null))
-        }).catch((e) => {
-            next(e, null, null)
-        })
-    }))
-
-passport.use("signup", new Strategy({
-    usernameField: "email",
-    passwordField: "password",
-    passReqToCallback: true
-},
-    (req, email, password, callback) => {
-        const body = req.body
-        const first = body.firstName
-        const last = body.lastName
-        userModel.create({ "username": email, "email": email, "password": password, firstName: first, lastName: last}).then((user) => {
-            return callback(null, {
-                "message": "success",
-                "user": user
-            })
-        }).catch(e => {
-            if (e.code === 11000) {
-                console.log("we already have this user")
-                callback({
-                    "error": "user already exists"
-                }, null)
-            }
-            else {
-                console.log(e)
-            }
-        })
-    }
-))
 
 
 router.post("/login", (req, res, next) => {
     passport.authenticate("login",
+        {session: false},
         (error, user, info) => {
             if (error) {
                 res.status(500).send({ "error": JSON.stringify(error) })
@@ -117,7 +34,7 @@ router.post("/login", (req, res, next) => {
                         }
                     }
                     else {
-                        const token = JWT.sign({ userId: user._id, "email": user.email, "firstName": user.firstName, "lastName": user.lastName, "role": user.role, "status": user.status }, process.env.JWT_SECRET, { expiresIn: "48h" })
+                        const token = JWT.sign({ userId: user._id, email: user.email, password: user.password, firstName: user.firstName, lastName: user.lastName }, process.env.JWT_SECRET, { expiresIn: "48h" })
                         res.send({ token: token })
                     }
                 })
@@ -195,7 +112,9 @@ router.post("/resetPassword", (req, res) => {
 })
 
 router.post("/signup", (req, res) => {
-    passport.authenticate("signup", (error, info) => {
+    passport.authenticate("signup", 
+    {session: false},
+    (error, info) => {
         if (error !== null) {
             res.status(500).send({ "error": error.error })
         }
@@ -216,7 +135,7 @@ router.post("/signup", (req, res) => {
 })
 
 router.get('/profile', (req, res) => {
-    passport.authenticate("jwt", { session: false }, (error, user) => {
+    passport.authenticate("jwt", { session: false }, (error, user, info) => {
         if (error) {
             res.status(500).send({ error: error })
         }
