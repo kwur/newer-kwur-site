@@ -17,7 +17,7 @@ const Signup = () => {
                 alert("user already exists. sorry buddy")
             }
             else {
-                navigate("/dashboard")
+                navigate("/dj/dashboard")
             }
         })
     }

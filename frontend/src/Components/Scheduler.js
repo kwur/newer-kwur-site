@@ -9,7 +9,7 @@ const Scheduler = () => {
         if(!show) {
             findShowForUser().then(result => {
                 setShow(result)
-            })
+            }).catch(e => console.log(e))
         }
     })
     return (
@@ -17,6 +17,7 @@ const Scheduler = () => {
             <Header />
             {show ? 
             <>
+                You already have a show scheduled!
                 <div>
                     Show Name: {show.showName}
                 </div>

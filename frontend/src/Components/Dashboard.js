@@ -12,6 +12,11 @@ const Dashboard = () => {
             navigate("/login")
         }
         getLoggedInUser().then(loggedInUser => {
+            if(!loggedInUser) {
+                //token was likely invalid
+                localStorage.removeItem("token")
+                // navigate("/login")
+            }
             if(!user) {
                 setUser(loggedInUser)
             }

@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema(
     showTime: {
       type: Object,
       default: null,
+    },
+    choices: {
+      type: Array,
+      default: []
     }
   },
   { timestamps: true }
