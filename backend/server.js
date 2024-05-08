@@ -67,7 +67,7 @@ passport.use("jwt", new JWTstrategy({
                 return next(null, user)
             }
             else {
-                return next(null, false)
+                return next(null, false)    
             }
         }).catch(error => {
             return next(error)

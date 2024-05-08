@@ -1,5 +1,7 @@
 import axios from "axios"
 
+const url = process.env.REACT_APP_BACKEND_URL + "/shows"
+
 /**
  * Attempts to make a show given time choices and show info, assumes information has been validated
  * @param choices an array of time choices where the format is:
@@ -16,7 +18,7 @@ export function tryToMakeShow(choices, showInfo) {
     if(!token) {
         return Promise.resolve(1)
     }
-    return axios.post("http://localhost:3001/shows/attemptCreateNewShow", {
+    return axios.post(url + "/attemptCreateNewShow", {
         choices: choices,
         showInfo: showInfo
     }, {
@@ -35,4 +37,17 @@ export function tryToMakeShow(choices, showInfo) {
         console.log(e)
         return undefined
     })
+}
+
+export function findShowForUser() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.get(url + "/findShowForUser", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => result.data.show)
+
 }

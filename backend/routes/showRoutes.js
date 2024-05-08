@@ -94,5 +94,30 @@ router.post("/attemptCreateNewShow", (req, res) => {
     })(req, res)
 })
 
+router.get("/findShowForUser", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            showModel.findOne({userId: user._id}).then(show => {
+                console.log(show)
+                if(show) {
+                    res.status(200).send({show: show})
+                }
+                else {
+                    res.sendStatus(404)
+                }
+            }).catch(e => {
+                console.log(e)
+                res.sendStatus(500)
+            })
+        }
+    })(req, res)
+})
 
 module.exports = router
