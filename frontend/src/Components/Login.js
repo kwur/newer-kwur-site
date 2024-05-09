@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { login } from "../utils/userUtils"
+import { Link } from "react-router-dom"
 import Header from "./Header"
 const Login = () => {
     const token = localStorage.getItem("token")
     const nav = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
-    if(token) {
-        nav("/dashboard")
-    }
+    useEffect(() => {
+        if(localStorage.getItem("token"))  {
+            nav("/dj/dashboard")
+        }
+    })
     const handleLogin = (e) => {
         e.preventDefault()
         const username = e.target.username.value
@@ -35,14 +38,14 @@ const Login = () => {
                         Sign In
                     </div>
                     <div className="group flex flex-col pb-10 w-100">
-                        <label className="group-focus-within:text-red-500 pr-10 w-100 text-2xl font-subtitle" htmlFor="username">
-                            e m a i l
+                        <label className="tracking-mostwide group-focus-within:text-red-500 pr-10 w-100 text-2xl font-subtitle" htmlFor="username">
+                            EMAIL
                         </label>
                         <input id="username" type="text" className="font-mono rounded border-2 border-black focus:outline-red-500 p-1 w-100"/>
                     </div>
                     <div className="group flex flex-col pb-10 w-100">
-                        <label className="group-focus-within:text-red-500 pr-10 w-100 text-2xl font-subtitle" htmlFor="username">
-                            p a s s w o r d
+                        <label className="tracking-mostwide group-focus-within:text-red-500 pr-10 w-100 text-2xl font-subtitle" htmlFor="username">
+                            PASSWORD
                         </label>
                         <div className="flex flex-col w-100 relative">
                             <input type={`${showPassword === false ? "password" : "text"}`} id="password" className="font-mono rounded border-black border-2 group-focus:text-red-500 focus:outline-red-500 p-1 w-100"/>
@@ -53,7 +56,10 @@ const Login = () => {
                             </span>
                         </div>
                     </div>
-                    <input className="font-subtitle w-fit bg-red-500 px-5 py-2 text-xl hover:bg-red-600 hover:text-white hover:cursor-pointer rounded font-subtitle" type="submit"/>
+                    <input value="Sign In" className="font-subtitle w-fit bg-red-500 px-5 py-2 text-xl text-white hover:bg-red-700 hover:cursor-pointer rounded font-subtitle" type="submit"/>
+                    <div className="font-subtitle pt-10 text-2xl">
+                        No account? <Link className="text-red-500 hover:text-3xl hover:text-red-600" to="/signup">Sign up here.</Link>
+                    </div>
                 </div>
             </form>
         </div>

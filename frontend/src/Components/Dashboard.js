@@ -27,7 +27,7 @@ const Dashboard = () => {
     <div className="flex justify-center">
         <div className="flex-col w-fit">
             <div className="font-header text-red-500 text-6xl pt-10 text-center">
-                {user?.firstName}'s Dashboard
+                { user && <span>{user.firstName}'s Dashboard</span>}  {/*  only show this once the user has loaded */}
             </div>
             <div className="text-red-500 font-subtitle text-4xl pt-10 text-center">
             </div>

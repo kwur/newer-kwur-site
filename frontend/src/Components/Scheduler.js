@@ -2,12 +2,18 @@ import { useEffect, useState } from "react"
 import CreateShow from "./CreateShow"
 import Header from "./Header"
 import { findShowForUser } from "../utils/showUtils"
+import { useNavigate } from "react-router-dom"
 
 const Scheduler = () => {
     const [show, setShow] = useState(undefined)
+    const navigate = useNavigate()
     useEffect(() => {
         if(!show) {
             findShowForUser().then(result => {
+                if(result === 1) {
+                    // user is not logged in
+                    navigate("/login")
+                }
                 setShow(result)
             }).catch(e => console.log(e))
         }
@@ -15,6 +21,7 @@ const Scheduler = () => {
     return (
         <>
             <Header />
+            { console.log(show)}
             {show ? 
             <>
                 You already have a show scheduled!

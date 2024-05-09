@@ -10,6 +10,9 @@ module.exports = {
       mono: ['"Kode Mono"', 'monospace'],
       header: ["burnaby-stencil", 'sans-serif'],
     },
+    letterSpacing: {
+      mostwide: "0.4em"
+    },
     extend: {
       backgroundImage: {
         "logoblack": "url('../public/kwurblack.svg');",

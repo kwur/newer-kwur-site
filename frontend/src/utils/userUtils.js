@@ -7,15 +7,16 @@ const url = "http://localhost:3001"
  * @returns true if successful, false otherwise
  */
 export function login(username, password) {
-    const token = localStorage.getItem("token")
-    if(token) {
-        return Promise.resolve(true)
-    }
+    // const token = localStorage.getItem("token")
+    // if(token ) {
+    //     return Promise.resolve(true)
+    // }
     return axios.post(url + "/users/login", {
         email: username,
         password: password
     }).then(result => {
         // if(result.data.)
+        console.log(result)
         if(result.status === 200) {
             const newToken = result.data.token
             localStorage.setItem("token", newToken)

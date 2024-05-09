@@ -1,10 +1,10 @@
 # KWUR site
 
 LOGIN/SIGNUP:
-[ ] style signup page
-[ ] make signup page accessible
-[ ] automatically log in after sign up 
-[ ] validate emails
+[X] style signup page
+[X] make signup page accessible
+[X] automatically log in after sign up 
+[X] validate emails
 [ ] sign out button
 
 

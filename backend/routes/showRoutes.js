@@ -40,7 +40,6 @@ const bumpShowHolder = async (showHolder, oldShow, showStealer, newShow) => {
     // remove original show
     await showModel.findByIdAndDelete(oldShow._id)
     // create the show for the show stealer
-    console.log(newShow.showTime)
     try {
         await showModel.create({
             userId: showStealer._id,
@@ -53,13 +52,11 @@ const bumpShowHolder = async (showHolder, oldShow, showStealer, newShow) => {
         console.log(e)
     }
     // attempt to create show for showHolders other choices
-    console.log(showHolder)
     const madeNewShow = await checkTime(showHolder, showHolder.choices, oldShow)
 
-    console.log("made new show for the show holder?", madeNewShow)
     if(madeNewShow === true) {
         return showModel.findOne({userId: showHolder._id}).then(async newShow => {
-            const contents = "<h1>Your show time got moved to another choice.</h1><div>Hi " + showHolder.firstName + ", looks like someone with more credits bumped you out of your current show time. We have rescheduled you to " + newShow.showTime.day + "s at " + newShow.showTime.startTime + " to " + newShow.showTime.endTime + ". Reply to this email if that is a problem, or re-fill out the show form on <a href=\"www.kwur.wustl.edu\">kwur.wustl.edu</a></div>"
+            const contents = "<h1>Your show time got moved to another choice.</h1><div>Hi " + showHolder.firstName + ", looks like someone with more credits bumped you out of your current show time. We have rescheduled you to " + newShow.showTime.day + "s at " + newShow.showTime.startTime + " to " + newShow.showTime.endTime + ". Reply to this email if that is a problem, or re-fill out the show form on <a href=\"http://kwur.wustl.edu\">kwur.wustl.edu</a></div>"
             await emailer(showHolder.email, undefined, false, "Nards! Your Show Got Bumped -- KWUR", contents)
             return true
         }).catch (e => {
@@ -68,14 +65,13 @@ const bumpShowHolder = async (showHolder, oldShow, showStealer, newShow) => {
         })
     }
     else {
-        const contents = "<h1>Your show time got canceled.</h1><div>Hi " + showHolder.firstName + ", looks like someone with more credits bumped you out of your current show time. It looks like you either didn't provide other choices or all of your other choices were taken. Please re-fill out the show form on <a href=\"http://www.kwur.wustl.edu\">kwur.wustl.edu</a></div> or reply to this email for further help."
+        const contents = "<h1>Your show time got canceled.</h1><div>Hi " + showHolder.firstName + ", looks like someone with more credits bumped you out of your current show time. It looks like you either didn't provide other choices or all of your other choices were taken. Please re-fill out the show form on <a href=\"http://kwur.wustl.edu\">kwur.wustl.edu</a></div> or reply to this email for further help."
         await emailer(showHolder.email, undefined, false, "IMPORTANT - Your Show Got Removed -- KWUR", contents)
         return true
     }
 }
 
 const checkTime = async (user, choices, showInfo) => {
-    console.log("CHECKING TIME ")
     if(choices.length === 0) {
         return false // we checked everything, none worked
     }
@@ -94,26 +90,19 @@ const checkTime = async (user, choices, showInfo) => {
             return checkTime(user, choices, showInfo)
         }
         try {
-            // const result = await showModel.findOne({ showTime: showTime })
-            console.log("choice", choice)
             var canMakeTheShow = false
             const overlappingShow = await isTimeAvailable(choice)
             if(overlappingShow) {
-                console.log("conflicting show:", overlappingShow)
                 // if someone has a show at that time, who has more credits?
                 return userModel.findById(overlappingShow.userId).then(async showHolder => {
                     if(showHolder) {
                         const holderCredits = showHolder.credits
                         const attempterCredits = user.credits
-                        console.log(holderCredits, attempterCredits)
                         if(holderCredits >= attempterCredits)  {
-                            console.log("the holder of the show has more credits")
                             choices.shift()
-                            console.log("checking time with the rest of user's choices: ", choices)
                             return checkTime(user, choices, showInfo)
                         }
                         else {
-                            console.log("attempter has more credits - bumping the holder")
                             canMakeTheShow = true
                             return await bumpShowHolder(showHolder, overlappingShow, user, {showInfo: showInfo, showTime: showTime})
                         }
@@ -121,7 +110,6 @@ const checkTime = async (user, choices, showInfo) => {
                 })
             }
             if(!overlappingShow || canMakeTheShow) {
-                console.log("able to make the show at this time!")
                 // then the show time is not in any of the other shows, all good!
                 try {
                     const makeANewShow = await showModel.create({
@@ -132,7 +120,6 @@ const checkTime = async (user, choices, showInfo) => {
                         showTime: showTime
                     })
                     if(makeANewShow) {
-                        console.log("made new show -- exiting")
                         return true
                     }
                 }
@@ -167,7 +154,6 @@ router.post("/attemptCreateNewShow", (req, res) => {
         else {
             const choices = req.body.choices
             const showInfo = req.body.showInfo
-            const userName = user.firstName + " " + user.lastName
             userModel.findByIdAndUpdate(user._id, { $set: {
                 choices: choices
             }}, {new: true}).then(newUser =>  {
@@ -213,4 +199,28 @@ router.get("/findShowForUser", (req, res) => {
     })(req, res)
 })
 
+router.delete("/deleteShow", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            showModel.findOneAndDelete({userId: user._id}).then(show => {
+                if(show) {
+                    res.sendStatus(200)
+                }
+                else {
+                    res.sendStatus(404)
+                }
+            }).catch(e => {
+                console.log(e)
+                res.sendStatus(500)
+            })
+        }
+    })(req, res)
+})
 module.exports = router
