@@ -1,7 +1,7 @@
 // //https://www.w3schools.com/nodejs/nodejs_email.asp
 require("dotenv").config()
 
-const sendEmail = (email, link, isReset, subject, html) => {
+const sendEmail = async (email, link, isReset, subject, html) => {
     const mailer = require("nodemailer")
     const sender = mailer.createTransport({
         service: 'gmail',
@@ -31,5 +31,6 @@ const sendEmail = (email, link, isReset, subject, html) => {
         }
     })
 }
+
 
 module.exports = sendEmail

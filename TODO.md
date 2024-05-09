@@ -1,11 +1,11 @@
 # KWUR site
 
 
-[ ] handle overlapping/containing times in scheduler conflicts
+[X] handle overlapping/containing times in scheduler conflicts
 [ ] redirect after show is created successfully
 [ ] validate emails
-[ ] notify when bump
+[X] notify when bump
 [ ] handle domino bumps 
-
+[ ] handle bumping someone with no other choices
 
 

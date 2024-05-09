@@ -3,20 +3,43 @@ const express = require("express")
 const passport = require("passport")
 const showModel = require("../models/Show")
 const userModel = require("../models/User")
+const emailer = require("../sendEmail")
 require("dotenv").config()
 
 const router = express.Router()
 
 const isGeorgeTime = (userFullName, choice) => {
-    const choiceStartHour = parseInt(choice.startTime.substring(0, 2))
-    const choiceEndHour = parseInt(choice.endTime.substring(0, 2))
+    const choiceStartHour = choice.startTime
+    const choiceEndHour = choice.endTime
     return userFullName !== "George Yeh" && choice.day === "Saturday" && choiceStartHour >= 9 && choiceEndHour < 12
+}
+
+// check if time is overlapping
+const isTimeAvailable = (time) => {
+    return showModel.find({"showTime.day": time.day}).then(existingTimes => {
+        for(var index in existingTimes) {
+            const show = existingTimes[index]
+            const existingTime = show.showTime
+            const startAfterExistingShowEnds = time.startTime >= existingTime.endTime
+
+            const endBeforeExistingShowStarts = time.endTime <= existingTime.startTime
+            const startBeforeExistingShowEnds = time.startTime <= existingTime.endTime
+            // if the new show starts after an existing show ends, we don't care because there is no possible overlap
+            // otherwise, the new show has to both start before the existing one ends and end before the existing one starts in order to not overlap
+            if((startAfterExistingShowEnds === true) || (startBeforeExistingShowEnds === true && endBeforeExistingShowStarts === true)) {
+                // continue, only leaving this here because it is more intuitive to me to think of how a show can work than the opposite. 
+            }
+            else {
+                return show // the show cannot happen, we don't need to check anyone else
+            }
+        }
+    })
 }
 
 const bumpShowHolder = async (showHolder, oldShow, showStealer, newShow) => {
     // remove original show
     await showModel.findByIdAndDelete(oldShow._id)
-    // create the new show for the show stealer
+    // create the show for the show stealer
     console.log(newShow.showTime)
     try {
         await showModel.create({
@@ -30,18 +53,31 @@ const bumpShowHolder = async (showHolder, oldShow, showStealer, newShow) => {
         console.log(e)
     }
     // attempt to create show for showHolders other choices
-    console.log("show holder", showHolder)
-    checkTime(showHolder, showHolder.choices, oldShow)
-    // checkTime(showHolder,  )
-    // checkTime(showHolder, show)
-    // shoot them an email 
+    console.log(showHolder)
+    const madeNewShow = await checkTime(showHolder, showHolder.choices, oldShow)
+
+    console.log("made new show for the show holder?", madeNewShow)
+    if(madeNewShow === true) {
+        return showModel.findOne({userId: showHolder._id}).then(async newShow => {
+            const contents = "<h1>Your show time got moved to another choice.</h1><div>Hi " + showHolder.firstName + ", looks like someone with more credits bumped you out of your current show time. We have rescheduled you to " + newShow.showTime.day + "s at " + newShow.showTime.startTime + " to " + newShow.showTime.endTime + ". Reply to this email if that is a problem, or re-fill out the show form on <a href=\"www.kwur.wustl.edu\">kwur.wustl.edu</a></div>"
+            await emailer(showHolder.email, undefined, false, "Nards! Your Show Got Bumped -- KWUR", contents)
+            return true
+        }).catch (e => {
+            console.log("error in finding the new show", e)
+            return undefined
+        })
+    }
+    else {
+        console.log(madeNewShow)
+        return false
+    }
 }
 
 const checkTime = async (user, choices, showInfo) => {
+    console.log("CHECKING TIME ")
     if(choices.length === 0) {
         return false // we checked everything, none worked
     }
-    console.log("HUH", choices)
     const choice = choices[0]
     if(choice !== null) {
         const startTime = choice.startTime
@@ -52,34 +88,39 @@ const checkTime = async (user, choices, showInfo) => {
             startTime: startTime,
             endTime: endTime
         }
-        var canMakeTheShow = false
         if(isGeorgeTime(user.firstName + " " + user.lastName, choice) === true) { // only check if time is available if it is not George's
             choices.shift()
             return checkTime(user, choices, showInfo)
         }
         try {
-            const result = await showModel.findOne({ showTime: showTime })
-            if(result !== null) {
+            // const result = await showModel.findOne({ showTime: showTime })
+            console.log("choice", choice)
+            var canMakeTheShow = false
+            const overlappingShow = await isTimeAvailable(choice)
+            if(overlappingShow) {
+                console.log("conflicting show:", overlappingShow)
                 // if someone has a show at that time, who has more credits?
-                console.log(result)
-                userModel.findById(result.userId).then(showHolder => {
+                return userModel.findById(overlappingShow.userId).then(async showHolder => {
                     if(showHolder) {
                         const holderCredits = showHolder.credits
                         const attempterCredits = user.credits
+                        console.log(holderCredits, attempterCredits)
                         if(holderCredits >= attempterCredits)  {
                             console.log("the holder of the show has more credits")
                             choices.shift()
+                            console.log("checking time with the rest of user's choices: ", choices)
                             return checkTime(user, choices, showInfo)
                         }
                         else {
                             console.log("attempter has more credits - bumping the holder")
                             canMakeTheShow = true
-                            bumpShowHolder(showHolder, result, user, {showInfo: showInfo, showTime: showTime})
+                            return await bumpShowHolder(showHolder, overlappingShow, user, {showInfo: showInfo, showTime: showTime})
                         }
                     }
                 })
             }
-            if(result === null || canMakeTheShow) {
+            if(!overlappingShow || canMakeTheShow) {
+                console.log("able to make the show at this time!")
                 // then the show time is not in any of the other shows, all good!
                 try {
                     const makeANewShow = await showModel.create({
@@ -90,6 +131,7 @@ const checkTime = async (user, choices, showInfo) => {
                         showTime: showTime
                     })
                     if(makeANewShow) {
+                        console.log("made new show -- exiting")
                         return true
                     }
                 }
@@ -100,9 +142,9 @@ const checkTime = async (user, choices, showInfo) => {
                     }
                     return false
                 }
+                choices.shift()
+                return checkTime(user, choices, showInfo)
             }
-            choices.shift()
-            return checkTime(user, choices, showInfo)
         }
         catch (e) { 
             console.log(e)
@@ -125,11 +167,9 @@ router.post("/attemptCreateNewShow", (req, res) => {
             const choices = req.body.choices
             const showInfo = req.body.showInfo
             const userName = user.firstName + " " + user.lastName
-            console.log(userName)
             userModel.findByIdAndUpdate(user._id, { $set: {
                 choices: choices
             }}, {new: true}).then(newUser =>  {
-                console.log("new  User",newUser)
                 checkTime(newUser, choices, showInfo).then(isTimeTaken => {
                     console.log("Show was just attempted to be made. Was it successful?", isTimeTaken)
                     if(isTimeTaken === true) {
@@ -158,7 +198,6 @@ router.get("/findShowForUser", (req, res) => {
         }
         else {
             showModel.findOne({userId: user._id}).then(show => {
-                console.log(show)
                 if(show) {
                     res.status(200).send({show: show})
                 }
