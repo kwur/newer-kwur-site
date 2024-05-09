@@ -1,11 +1,18 @@
 # KWUR site
 
-
-[X] handle overlapping/containing times in scheduler conflicts
-[ ] redirect after show is created successfully
+LOGIN/SIGNUP:
+[ ] style signup page
+[ ] make signup page accessible
+[ ] automatically log in after sign up 
 [ ] validate emails
+[ ] sign out button
+
+
+SCHEDULER:
+[X] handle overlapping/containing times in scheduler conflicts
+[X] redirect after show is created successfully [reloaded]
 [X] notify when bump
-[ ] handle domino bumps 
-[ ] handle bumping someone with no other choices
+[X] handle domino bumps 
+[X] handle bumping someone with no other choices
 
 

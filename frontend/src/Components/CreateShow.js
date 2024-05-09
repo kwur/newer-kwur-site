@@ -1,7 +1,9 @@
 import { useState } from "react"
 import { tryToMakeShow } from "../utils/showUtils"
+import { useNavigate } from "react-router-dom"
 
 const CreateShow = () => {
+    const navigate = useNavigate()
     const [showSecond, setShowSecond] = useState(false)
     const [showThird, setShowThird] = useState(false)
     const timeValidation = (choice, numberChoice) => {
@@ -95,6 +97,7 @@ const CreateShow = () => {
         tryToMakeShow(choices, createdShow).then(result => {
             if(result === true ) { 
                 alert("Your show has been created!")
+                window.location.reload()
             }
             else if(result === false ) {
                 alert("All of your choices were taken")

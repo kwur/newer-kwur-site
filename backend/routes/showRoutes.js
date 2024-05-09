@@ -68,8 +68,9 @@ const bumpShowHolder = async (showHolder, oldShow, showStealer, newShow) => {
         })
     }
     else {
-        console.log(madeNewShow)
-        return false
+        const contents = "<h1>Your show time got canceled.</h1><div>Hi " + showHolder.firstName + ", looks like someone with more credits bumped you out of your current show time. It looks like you either didn't provide other choices or all of your other choices were taken. Please re-fill out the show form on <a href=\"http://www.kwur.wustl.edu\">kwur.wustl.edu</a></div> or reply to this email for further help."
+        await emailer(showHolder.email, undefined, false, "IMPORTANT - Your Show Got Removed -- KWUR", contents)
+        return true
     }
 }
 
