@@ -51,3 +51,18 @@ export function findShowForUser() {
     }).then(result => result.data.show)
 
 }
+
+export function removeShowForUser() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.delete(url + "/deleteShow", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(_ => true).catch(e => {
+        console.log(e)
+        return false
+    })
+}

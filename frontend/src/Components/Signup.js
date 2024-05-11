@@ -16,6 +16,7 @@ const Signup = () => {
             alert("Please choose a valid email.")
             return
         }
+       
         signup(firstName, lastName, username, password).then(result => {
             console.log("Login result", result)
             if(result === false) {

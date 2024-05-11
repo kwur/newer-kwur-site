@@ -15,4 +15,24 @@ SCHEDULER:
 [X] handle domino bumps 
 [X] handle bumping someone with no other choices
 
+SCHEDULE: 
+[ ] display all shows in database to everyone
 
+EXEC: 
+[ ] use different roles 
+[ ] account verification thru GM or personnel
+
+
+GM:
+[ ] god powers over DJ and exec accounts
+[ ] only GM@KWUR.COM has GM abilities by default?
+    - or have to verify through the email account might be better
+
+
+PERSONNEL ABILITIES:
+[ ] god powers over shows
+[ ] crediting system
+[ ] open/close scheduling
+
+MISC:
+[ ] 404 page
