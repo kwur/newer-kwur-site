@@ -25,8 +25,7 @@ EXEC:
 
 GM:
 [ ] god powers over DJ and exec accounts
-[ ] only GM@KWUR.COM has GM abilities by default?
-    - or have to verify through the email account might be better
+[ ] have to verify through the email account might be better
 
 
 PERSONNEL ABILITIES:
@@ -35,4 +34,5 @@ PERSONNEL ABILITIES:
 [ ] open/close scheduling
 
 MISC:
-[ ] 404 page
+[X] 404 page
+[ ] user search

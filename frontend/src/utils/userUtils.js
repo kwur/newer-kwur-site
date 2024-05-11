@@ -79,3 +79,17 @@ export function getLoggedInUser() {
         return null
     })
 }
+
+export function search(search) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/userSearch", {search: search}, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.data.searchResults
+    }).catch(e => console.log(e))
+}

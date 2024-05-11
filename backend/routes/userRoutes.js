@@ -207,4 +207,46 @@ router.get("/logout", (req, res) => {
     })
 })
 
+router.post("/userSearch", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            userModel.find({
+                $or: [
+                    {
+                        firstName: {
+                            $regex: req.body.search,
+                            $options: "i"
+                        },
+                    },
+                    {
+                        lastName: {
+                            $regex: req.body.search,
+                            $options: "i"
+                        },
+                    },
+                    {
+                        email: {
+                            $regex: req.body.search,
+                            $options: "i"
+                        }
+                    }
+                ]
+            }).then(results => {
+                if(results) {
+                    res.status(200).send({searchResults: results})
+                }
+            }).catch(e => {
+                console.log(e)
+                res.status(500).send({error: e})
+            })
+        }
+    })(req, res)
+})
 module.exports = router

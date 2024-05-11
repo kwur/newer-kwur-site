@@ -74,6 +74,8 @@ userSchema.methods.comparePassword = async function (password) {
 
 userSchema.plugin(passportLocalMongoose)
 
+userSchema.index({"$**": "text"})
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

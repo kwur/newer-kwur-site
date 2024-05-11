@@ -16,6 +16,7 @@ import Join from './Components/Join';
 import Support from './Components/Support';
 import Contact from './Components/Contact';
 import ExecHome from './Components/ExecHome';
+import UserSearch from './Components/UserSearch';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dj/scheduler" element={<Scheduler />} />
           <Route path="/dj/exec" element={<ExecHome />} />
+          <Route path="/test" element={<UserSearch />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </Router>
