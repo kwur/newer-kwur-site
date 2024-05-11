@@ -10,7 +10,7 @@ const UserSearch = () => {
         }).catch(e => console.log(e))
     }
     return (<>
-        <input type="text" className="bg-gray-500" onChange={(e) => {
+        <input type="text" className="border-2" onChange={(e) => {
             if(e.target.value === "") {
                 setSearched(false)
             }

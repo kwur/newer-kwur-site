@@ -35,4 +35,4 @@ PERSONNEL ABILITIES:
 
 MISC:
 [X] 404 page
-[ ] user search
+[X] user search
