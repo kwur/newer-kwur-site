@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Header from "./Header"
 import { getLoggedInUser } from "../utils/userUtils"
 import Loading from "./Loading"
+import { Link } from "react-router-dom"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
@@ -21,7 +22,11 @@ const ExecHome = () => {
             <Loading />
             :
             user.role === "dj" ? 
-                "Here's your current exec board: [TODO]" : 
+            <>
+                "Here's your current exec board: [TODO]"
+                <Link to="/dj/accountVerification">Need to create a GM acccount? Click here. </Link>
+            </>
+             : 
                 "Exec Dashboard"
         }
     </>)

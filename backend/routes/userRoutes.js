@@ -12,6 +12,7 @@ const JWTextract = require("passport-jwt").ExtractJwt
 
 const router = express.Router()
 
+const url = process.env.DEBUGGING === "true" ? process.env.DEBUGGING_FRONTEND_URL : process.env.FRONTEND_URL
 
 router.post("/login", (req, res, next) => {
     passport.authenticate("login",
@@ -249,4 +250,91 @@ router.post("/userSearch", (req, res) => {
         }
     })(req, res)
 })
+
+router.post("/promoteToGM", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            //really readable line of code to first locate any token that is associated with the user and delete it
+            tokenModel.findOne({ userId: user._id }).then((oldToken) => {
+                if(oldToken) {
+                    res.status(201).send({message: "already pending"})
+                }
+                else {
+                    const GMtoken = crypto.randomBytes(32).toString("hex")
+                    bcrypt.hash(GMtoken, Number(bcrypt.genSalt(10))).then((hash) => {
+                        tokenModel.create({
+                            userId: user._id,
+                            token: hash,
+                            createdAt: Date.now()
+                        }).then((createdToken) => {
+                            const resetLink = url + "/createGM?token=" + GMtoken + "&user=" + user._id
+                            console.log(resetLink)
+                            // TODO allow for non-hardcoded GM email
+                            sendEmail("gm@kwur.com", resetLink, false, "Authorize New GM Account -- kwur.wustl.edu", `<h1>${user.firstName} is requesting a GM account</h1><div>User ${user.firstName} ${user.lastName} (${user.email}) is requesting a GM account. <a href=${resetLink}>Click here to approve or deny this user.</a></div><div>Any questions? Respond to this email or contact the webmaster!</div>`)
+                        }).catch(e => {
+                            console.log(e)
+                            res.status(418).send({ "error": e })
+                        }) // from https://blog.logrocket.com/implementing-secure-password-reset-node-js/#password-request-service
+                    }).catch(e => {
+                        res.status(418).send({ "message": "there was an error hashing the token", "error": e })
+                    })
+                }
+            }).catch(e => console.log(e))
+        }
+    })(req, res)
+})
+
+router.post("/approveOrDenyGMRequest", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            console.log(req.body.id)
+            tokenModel.findOne({ userId: req.body.id }).then((tokenObject) => {
+                if (!tokenObject) {
+                    res.status(418).send({ "message": "no token was found registered for this user" })
+                }
+                else if(req.body.approve === true) {
+                    const token = tokenObject.token
+                    console.log(token, req.body.token)
+                    bcrypt.compare(req.body.token, token).then((validity) => {
+                        console.log(validity)
+                        if (validity === true) {
+                            userModel.findByIdAndUpdate(req.body.id, {
+                                $set: {
+                                    role: "GM"
+                                }
+                            }).then(result => {
+                                if(result) {
+                                    res.status(200).send({message: "updated user"})
+                                }
+                            }).catch(e => {
+                                console.log(e)
+                                res.status(500).send(e)
+                            })
+                        }
+                        else {
+                            res.status(401).send({ "message": "invalid token you suck" })
+                        }
+                    })
+                }
+                tokenModel.deleteOne(tokenObject).catch(e => console.log(e))
+            })
+        }
+    })(req, res)
+})
+
+
 module.exports = router

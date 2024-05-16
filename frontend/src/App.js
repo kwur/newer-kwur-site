@@ -17,6 +17,8 @@ import Support from './Components/Support';
 import Contact from './Components/Contact';
 import ExecHome from './Components/ExecHome';
 import UserSearch from './Components/UserSearch';
+import AccountVerification from './Components/AccountVerification';
+import HandleGMRequest from './Components/HandleGMRequest';
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dj/scheduler" element={<Scheduler />} />
           <Route path="/dj/exec" element={<ExecHome />} />
+          <Route path="/dj/accountVerification" element={<AccountVerification />} />
+          <Route path="/createGM" element={<HandleGMRequest />} />
           <Route path="/test" element={<UserSearch />} />
           <Route path="*" element={<NoPage />} />
         </Routes>

@@ -3,13 +3,17 @@ import { useEffect, useState } from "react"
 import { login } from "../utils/userUtils"
 import { Link } from "react-router-dom"
 import Header from "./Header"
-const Login = () => {
-    const token = localStorage.getItem("token")
+const Login = (props) => {
     const nav = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
     useEffect(() => {
         if(localStorage.getItem("token"))  {
-            nav("/dj/dashboard")
+            if(props.redirect) {
+                nav(props.redirect)
+            }
+            else {
+                nav("/dj/dashboard")
+            }
         }
     })
     const handleLogin = (e) => {
@@ -25,7 +29,12 @@ const Login = () => {
                 alert("Email does not exist")
             }
             else {
-                nav("/dj/dashboard")
+                if(props.redirect) {
+                    nav(props.redirect)
+                }
+                else {
+                    nav("/dj/dashboard")
+                }
             }
         })
     }

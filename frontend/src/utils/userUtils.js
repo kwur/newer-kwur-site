@@ -80,6 +80,22 @@ export function getLoggedInUser() {
     })
 }
 
+export function getUserById(id) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/findUser", {
+        id: id
+    }, { 
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.data.user
+    }).catch(e => console.log(e))
+}
+
 export function search(search) {
     const token = localStorage.getItem("token")
     if(!token) {
@@ -91,5 +107,38 @@ export function search(search) {
         }
     }).then(result => {
         return result.data.searchResults
+    }).catch(e => console.log(e))
+}
+
+export function sendGMRequest(){ 
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/promoteToGM", {search: search}, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        console.log(result)
+    }).catch(e => console.log(e))
+}
+
+export function approveOrDenyGMRequest(approve, userToken, userId) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    console.log(userId)
+    return axios.post(url + "/users/approveOrDenyGMRequest", {
+        approve: approve,
+        token: userToken,
+        id: userId
+    }, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        console.log(result)
     }).catch(e => console.log(e))
 }
