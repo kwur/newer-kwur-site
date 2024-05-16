@@ -251,6 +251,32 @@ router.post("/userSearch", (req, res) => {
     })(req, res)
 })
 
+router.post("/checkForToken", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            console.log(req.body.user)
+            tokenModel.findOne({userId: req.body.user}).then(foundToken => {
+                if(foundToken) {
+                    res.status(200).send({exists: true})
+                }
+                else {
+                    res.status(200).send({exists: false})
+                }
+            }).catch(e => {
+                console.log(e)
+                res.sendStatus(500)
+            })
+        }
+    })(req, res) 
+})
+
 router.post("/promoteToGM", (req, res) => {
     passport.authenticate("jwt", { session: false }, (error, user) => {
         if (error) {
@@ -329,6 +355,9 @@ router.post("/approveOrDenyGMRequest", (req, res) => {
                             res.status(401).send({ "message": "invalid token you suck" })
                         }
                     })
+                }
+                else {
+                    res.status(200).send({message: "user was not updated"})
                 }
                 tokenModel.deleteOne(tokenObject).catch(e => console.log(e))
             })

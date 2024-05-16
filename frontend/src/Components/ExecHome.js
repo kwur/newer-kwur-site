@@ -23,7 +23,7 @@ const ExecHome = () => {
             :
             user.role === "dj" ? 
             <>
-                "Here's your current exec board: [TODO]"
+                Here's your current exec board:
                 <Link to="/dj/accountVerification">Need to create a GM acccount? Click here. </Link>
             </>
              : 

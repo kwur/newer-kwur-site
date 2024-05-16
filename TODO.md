@@ -25,7 +25,7 @@ EXEC:
 
 GM:
 [ ] god powers over DJ and exec accounts
-[ ] have to verify through the email account might be better
+[X] have to verify through the email account
 
 
 PERSONNEL ABILITIES:

@@ -110,6 +110,20 @@ export function search(search) {
     }).catch(e => console.log(e))
 }
 
+export function checkForUserToken(userId) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/checkForToken", {user: userId}, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.data.exists
+    }).catch(e => console.log(e))
+}
+
 export function sendGMRequest(){ 
     const token = localStorage.getItem("token")
     if(!token) {
@@ -139,6 +153,6 @@ export function approveOrDenyGMRequest(approve, userToken, userId) {
             Authorization: "Bearer " + token
         }
     }).then(result => {
-        console.log(result)
+        return result.status === 200
     }).catch(e => console.log(e))
 }
