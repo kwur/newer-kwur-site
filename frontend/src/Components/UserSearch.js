@@ -29,7 +29,7 @@ const UserSearch = (props) => {
         
         <div>
         { results && searched === true && results.map(result => {
-            return <div id={JSON.stringify(result)} onClick={(e) => {
+            return <div key={result._id} id={JSON.stringify(result)} onClick={(e) => {
                 props.getSelected(e.target.id)
                 setClicked(result)
                 setResults()

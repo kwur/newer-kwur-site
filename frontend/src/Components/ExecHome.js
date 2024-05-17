@@ -3,6 +3,7 @@ import Header from "./Header"
 import { getLoggedInUser } from "../utils/userUtils"
 import Loading from "./Loading"
 import { Link } from "react-router-dom"
+import GMDashboard from "./GMDashboard"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
@@ -18,16 +19,16 @@ const ExecHome = () => {
     })
     return (<>
         <Header />
-        { loading === true ? 
-            <Loading />
-            :
-            user.role === "dj" ? 
-            <>
-                Here's your current exec board:
-                <Link to="/dj/accountVerification">Need to create a GM acccount? Click here. </Link>
-            </>
-             : 
-                "Exec Dashboard"
+        { loading === true 
+            ?  <Loading />
+            : user.role === "dj" 
+                ? <>
+                    { Date.now().getFullYear() + " Exec Board:"}
+                    <Link to="/dj/accountVerification">Need to create a GM acccount? Click here. </Link>
+                </>
+                : user.role === "GM" 
+                    ? <GMDashboard />
+                    : "Exec Dashboard"
         }
     </>)
 }

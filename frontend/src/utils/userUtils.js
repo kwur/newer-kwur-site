@@ -156,3 +156,35 @@ export function approveOrDenyGMRequest(approve, userToken, userId) {
         return result.status === 200
     }).catch(e => console.log(e))
 }
+
+export function removeOtherUser(userId) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/removeAnotherUser", {
+        id: userId
+    }, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.status === 200
+    }).catch(e => console.log(e))
+}
+export function changeUserRole(userId, newRole) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/changeUserRole", {
+        id: userId,
+        role: newRole
+    }, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.status === 201
+    }).catch(e => console.log(e))
+}

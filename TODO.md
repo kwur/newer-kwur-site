@@ -15,7 +15,7 @@ SCHEDULER:
 [X] handle domino bumps 
 [X] handle bumping someone with no other choices
 [ ] style show already created page
-[ ] search for user when selecting coDJ
+[X] search for user when selecting coDJ
 [ ] maybe make genre checkbox
 
 SCHEDULE: 
@@ -26,7 +26,7 @@ SCHEDULE:
 EXEC: 
 [ ] does anyone in exec need abilities besides GM and personnel.... i dont know
 [ ] use different roles 
-[ ] account verification thru GM or personnel
+[X] account verification thru GM or personnel
 [ ] upload new join pdf 
 [ ] upload images to be displayed? 
 

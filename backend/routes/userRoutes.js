@@ -365,5 +365,58 @@ router.post("/approveOrDenyGMRequest", (req, res) => {
     })(req, res)
 })
 
+router.post("/removeAnotherUser", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            userModel.findByIdAndDelete(req.body.id).then(result => {
+                console.log(result)
+                if(result) {
+                    res.sendStatus(200)
+                }
+                else {
+                    res.sendStatus(404)
+                }
+            }).catch(e => {
+                console.log(e)
+                res.sendStatus(500)
+            })
+        }
+    })(req, res)
+})
+
+router.post("/changeUserRole", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            userModel.findByIdAndUpdate(req.body.id, { $set: {
+                role: req.body.role
+            }}).then(result => {
+                if(result) {
+                    res.sendStatus(201)
+                }
+                else {
+                    res.sendStatus(404)
+                }
+            }).catch(e => {
+                console.log(e)
+                res.status(500).send({error: e})
+            })
+        }
+    })(req, res)
+})
+
 
 module.exports = router
