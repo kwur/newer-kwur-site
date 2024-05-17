@@ -14,11 +14,15 @@ SCHEDULER:
 [X] notify when bump
 [X] handle domino bumps 
 [X] handle bumping someone with no other choices
+[ ] style show already created page
 
 SCHEDULE: 
-[ ] display all shows in database to everyone
+[X] display all shows in database to everyone
+[ ] color code based off of genre
+    - does this mean that genres should be validated? 
 
 EXEC: 
+[ ] does anyone in exec need abilities besides GM and personnel.... i dont know
 [ ] use different roles 
 [ ] account verification thru GM or personnel
 
@@ -36,3 +40,4 @@ PERSONNEL ABILITIES:
 MISC:
 [X] 404 page
 [X] user search
+[ ] overhaul styling because i kinda hate it now

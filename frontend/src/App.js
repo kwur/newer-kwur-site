@@ -19,6 +19,7 @@ import ExecHome from './Components/ExecHome';
 import UserSearch from './Components/UserSearch';
 import AccountVerification from './Components/AccountVerification';
 import HandleGMRequest from './Components/HandleGMRequest';
+import ShowSchedule from './Components/ShowSchedule';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path="/listen" element={<Listen />} />
           <Route path="/about" element={<About />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/resources" element={<Resources />} />
+          <Route path="/showSchedule" element={<ShowSchedule />} />
           <Route path="/services" element={<Services />} />
           <Route path="/join" element={<Join />} />
           <Route path="/support" element={<Support />} />

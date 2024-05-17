@@ -19,7 +19,7 @@ const Header = () => {
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/about">About</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/listen">Listen</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/calendar">Calendar</Link>
-                <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/resources">Resources</Link>
+                <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/showSchedule">Show Schedule</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/services">Services</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/join">Join</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/support">Support</Link>

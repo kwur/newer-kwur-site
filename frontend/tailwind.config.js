@@ -27,6 +27,9 @@ module.exports = {
       },
       colors: {
         "background": "#f0f0f0;"
+      },
+      gridTemplateRows: {
+        "24": "repeat(25, minmax(0, 1fr))"
       }
     },
   },
