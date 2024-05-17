@@ -1,18 +1,24 @@
 import { useState } from "react"
 import { tryToMakeShow } from "../utils/showUtils"
 import { useNavigate } from "react-router-dom"
+import UserSearch from "./UserSearch"
+import TimePicker from "./TimePicker"
 
 const CreateShow = () => {
     const navigate = useNavigate()
     const [showSecond, setShowSecond] = useState(false)
     const [showThird, setShowThird] = useState(false)
+    const [firstChoiceTime, setFirstChoiceTime] = useState({startTime: undefined, endTime: undefined})
+    const [secondChoiceTime, setSecondChoiceTime] = useState({startTime: undefined, endTime: undefined})
+    const [thirdChoiceTime, setThirdChoiceTime] = useState({startTime: undefined, endTime: undefined})
+    const [coDJ, setCoDJ] = useState()
     const timeValidation = (choice, numberChoice) => {
         const number = {
             1: "first",
             2: "second",
             3: "third"
         }
-        if(choice.day === "[Select a Day]" || choice.startTime === "" || choice.endTime === "") { 
+        if(choice.day === "[Select a Day]" || !choice.startTime || !choice.endTime) { 
             return `Please choose a day, start time, and end time for your ${number[numberChoice]} choice, then submit again.`
         }
         const startHour = choice.startTime
@@ -23,15 +29,11 @@ const CreateShow = () => {
             return "Please make sure that your show starts before it ends!"
         }
     }
-    const convertTimeToInt = (time) => {
-        return parseInt(time.substring(0, 2))
-    } 
     const handleSubmit = (e) => {
         e.preventDefault()
         const form = e.target
         const showName = form.showName.value
         const genre = form.genre.value
-        const coDJ = form.coDJ.value
         if(showName === "") {
             alert("Please pick a show name before continuing.")
             return
@@ -42,9 +44,9 @@ const CreateShow = () => {
         }
         
         const firstChoiceDay = form.firstChoiceDay.value
-        const firstChoiceStartTime = convertTimeToInt(form.firstChoiceStartTime.value)
-        const firstChoiceEndTime = convertTimeToInt(form.firstChoiceEndTime.value)
-        if(firstChoiceDay === "[Select a Day]" || firstChoiceStartTime === "" || firstChoiceEndTime === "") {
+        const firstChoiceStartTime = firstChoiceTime.startTime
+        const firstChoiceEndTime = firstChoiceTime.endTime
+        if(firstChoiceDay === "[Select a Day]" || !firstChoiceStartTime  || !firstChoiceEndTime ) {
             alert("Please choose a day, start time, and end time for your first choice, then submit again.")
             return
         }
@@ -67,8 +69,8 @@ const CreateShow = () => {
         if(showSecond === true) {
             secondChoice = {
                 day: form.secondChoiceDay.value,
-                startTime: convertTimeToInt(form.secondChoiceStartTime.value),
-                endTime: convertTimeToInt(form.secondChoiceEndTime.value),
+                startTime: secondChoiceTime.startTime,
+                endTime: secondChoiceTime.endTime,
             }
             error = timeValidation(secondChoice, 2)
             if(error) {
@@ -79,8 +81,8 @@ const CreateShow = () => {
         if(showThird === true) {
             thirdChoice = {
                 day: form.thirdChoiceDay.value,
-                startTime: convertTimeToInt(form.thirdChoiceStartTime.value),
-                endTime: convertTimeToInt(form.thirdChoiceEndTime.value),
+                startTime: thirdChoiceTime.startTime,
+                endTime: thirdChoiceTime.endTime,
             }
             error = timeValidation(thirdChoice, 3)
             if(error) {
@@ -112,20 +114,23 @@ const CreateShow = () => {
             <h1 className="font-header text-center text-4xl text-black py-10">New Show Form</h1>
             <div className="space-y-5">
                 <div className="flex flex-col">
-                    <label>Show Name</label>
+                    <label>Show Name *</label>
                     <input id="showName" className="text-xl font-mono text-black border-2" type="text" />
                 </div>
                 <div className="flex flex-col">
-                    <label>Genre</label>
+                    <label>Genre *</label>
                     <input id="genre" className="text-xl font-mono text-black border-2" type="text" /> 
                 </div>
                 <div className="flex flex-col">
                     <label>Co-DJ (if applicable)</label>
-                    <input id="coDJ" className="text-xl font-mono text-black border-2" type="text" placeholder="optional" /> 
-                    {/* TODO change this to user search box */}
+                    {/* <input id="coDJ" className="text-xl font-mono text-black border-2" type="text" placeholder="optional" />  */}
+                    <UserSearch getSelected={(selected) => {
+                        const user = JSON.parse(selected)
+                        setCoDJ(user)
+                    }}/>
                 </div>
                 <div className="flex flex-col">
-                    <label>First Choice:</label>
+                    <label>First Choice: *</label>
                     <div>
                         <label>Day:</label>
                         <select id="firstChoiceDay" className="text-xl font-mono text-black ">
@@ -141,11 +146,36 @@ const CreateShow = () => {
                     </div>
                     <div>
                         <label>Start Time</label>
-                        <input id="firstChoiceStartTime" className="text-xl font-mono text-black" type="time" />
+                        {/* <input id="firstChoiceStartTime" className="text-xl font-mono text-black" type="time" /> */}
+                        <TimePicker 
+                            getAMPM={(AMPM) => {
+                                if(AMPM === "AM" && firstChoiceTime.startTime === 12) {
+                                    setFirstChoiceTime({startTime: 0, endTime: firstChoiceTime.endTime})
+                                }
+                                if(AMPM === "PM" && firstChoiceTime.startTime < 12) {
+                                    setFirstChoiceTime({startTime: firstChoiceTime.startTime + 12, endTime: firstChoiceTime.endTime})
+                                }
+                            }}
+                            getHour={(hour) => {
+                                setFirstChoiceTime({startTime: parseInt(hour), endTime: firstChoiceTime.endTime})
+                            }} 
+                            id="firstChoiceStartTime" />
                     </div>
                     <div>
                         <label>End Time</label>
-                        <input id="firstChoiceEndTime" className="text-xl font-mono text-black" type="time" />
+                        {/* <input id="firstChoiceEndTime" className="text-xl font-mono text-black" type="time" /> */}
+                        <TimePicker 
+                            getAMPM={(AMPM) => {
+                                if(AMPM === "AM" && firstChoiceTime.endTime === 12) {
+                                    setFirstChoiceTime({startTime: firstChoiceTime.startTime, endTime: 0})
+                                }
+                                if(AMPM === "PM" && firstChoiceTime.endTime < 12) {
+                                    setFirstChoiceTime({startTime: firstChoiceTime.startTime, endTime: firstChoiceTime.endTime + 12})
+                                }
+                            }}
+                            getHour={(hour) => {
+                                setFirstChoiceTime({startTime: firstChoiceTime.startTime, endTime: parseInt(hour)})
+                            }} />
                     </div>
                     { showSecond === false &&
                     <div onClick={() => setShowSecond(true)} className="h-4 w-4 bg-cover m-3 bg-no-repeat bg-more hover:cursor-pointer">
@@ -178,11 +208,34 @@ const CreateShow = () => {
                         </div>
                         <div>
                             <label>Start Time</label>
-                            <input id="secondChoiceStartTime" className="text-xl font-mono text-black" type="time" />
+                            <TimePicker 
+                            getAMPM={(AMPM) => {
+                                if(AMPM === "AM" && secondChoiceTime.startTime === 12) {
+                                    setSecondChoiceTime({startTime: 0, endTime: secondChoiceTime.endTime})
+                                }
+                                if(AMPM === "PM" && secondChoiceTime.startTime < 12) {
+                                    setSecondChoiceTime({startTime: secondChoiceTime.startTime + 12, endTime: secondChoiceTime.endTime})
+                                }
+                            }}
+                            getHour={(hour) => {
+                                setSecondChoiceTime({startTime: parseInt(hour), endTime: secondChoiceTime.endTime})
+                            }} 
+                             />  
                         </div>
                         <div>
                             <label>End Time</label>
-                            <input id="secondChoiceEndTime" className="text-xl font-mono text-black" type="time" />
+                            <TimePicker 
+                            getAMPM={(AMPM) => {
+                                if(AMPM === "AM" && secondChoiceTime.endTime === 12) {
+                                    setSecondChoiceTime({startTime: secondChoiceTime.startTime, endTime: 0})
+                                }
+                                if(AMPM === "PM" && secondChoiceTime.endTime < 12) {
+                                    setSecondChoiceTime({startTime: secondChoiceTime.startTime, endTime: secondChoiceTime.endTime + 12})
+                                }
+                            }}
+                            getHour={(hour) => {
+                                setSecondChoiceTime({startTime: secondChoiceTime.startTime, endTime: parseInt(hour)})
+                            }} />    
                         </div>
                         
                         {showThird === false && <div onClick={() => setShowThird(true)} className="h-4 w-4 bg-cover m-3 bg-no-repeat bg-more hover:cursor-pointer"></div>}
@@ -213,11 +266,34 @@ const CreateShow = () => {
                         </div>
                         <div>
                             <label>Start Time</label>
-                            <input id="thirdChoiceStartTime" className="text-xl font-mono text-black" type="time" />
-                        </div>
+                            <label>Start Time</label>
+                            <TimePicker 
+                            getAMPM={(AMPM) => {
+                                if(AMPM === "AM" && thirdChoiceTime.startTime === 12) {
+                                    setThirdChoiceTime({startTime: 0, endTime: thirdChoiceTime.endTime})
+                                }
+                                if(AMPM === "PM" && thirdChoiceTime.startTime < 12) {
+                                    setThirdChoiceTime({startTime: thirdChoiceTime.startTime + 12, endTime: thirdChoiceTime.endTime})
+                                }
+                            }}
+                            getHour={(hour) => {
+                                setThirdChoiceTime({startTime: parseInt(hour), endTime: thirdChoiceTime.endTime})
+                            }} 
+                             />                          </div>
                         <div>
                             <label>End Time</label>
-                            <input id="thirdChoiceEndTime" className="text-xl font-mono text-black" type="time" />
+                            <TimePicker 
+                            getAMPM={(AMPM) => {
+                                if(AMPM === "AM" && thirdChoiceTime.endTime === 12) {
+                                    setThirdChoiceTime({startTime: thirdChoiceTime.startTime, endTime: 0})
+                                }
+                                if(AMPM === "PM" && thirdChoiceTime.endTime < 12) {
+                                    setThirdChoiceTime({startTime: thirdChoiceTime.startTime, endTime: thirdChoiceTime.endTime + 12})
+                                }
+                            }}
+                            getHour={(hour) => {
+                                setThirdChoiceTime({startTime: thirdChoiceTime.startTime, endTime: parseInt(hour)})
+                            }} />    
                         </div>
                     </div>
                 }

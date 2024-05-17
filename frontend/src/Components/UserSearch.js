@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { search } from "../utils/userUtils"
 
-const UserSearch = () => {
+const UserSearch = (props) => {
     const [results, setResults] = useState([])
     const [searched, setSearched] = useState(false)
+    const [value, setValue] = useState("")
+    const [clicked, setClicked] = useState()
     const type = (searchValue) => {
         search(searchValue).then(rs => {
             setResults(rs)
@@ -11,6 +13,8 @@ const UserSearch = () => {
     }
     return (<>
         <input type="text" className="border-2" onChange={(e) => {
+            setValue(e.target.value)
+            setClicked(undefined)
             if(e.target.value === "") {
                 setSearched(false)
             }
@@ -18,12 +22,20 @@ const UserSearch = () => {
                 setSearched(true)
             }
             type(e.target.value)
-        }}/>
+        }} 
+        value= {
+            clicked ? clicked.firstName + " " + clicked.lastName : value
+        }/>
+        
         <div>
         { results && searched === true && results.map(result => {
-            return <div className="text-black">
-                {result.firstName}
-                {result.lastName}
+            return <div id={JSON.stringify(result)} onClick={(e) => {
+                props.getSelected(e.target.id)
+                setClicked(result)
+                setResults()
+            }}
+            className="text-black font-mono text-lg hover:font-bold hover:cursor-pointer" >
+                {result.firstName + " " + result.lastName}
             </div>
         }) }
         </div>
