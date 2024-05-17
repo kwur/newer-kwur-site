@@ -184,7 +184,19 @@ router.get("/findShowForUser", (req, res) => {
             res.status(401).send({ error: "invalid auth" })
         }
         else {
-            showModel.findOne({userId: user._id}).then(show => {
+            showModel.findOne({ $or: [
+                {
+                    userId: {
+                        $eq: user._id
+                    }
+                },
+                {
+                    "coDJ._id": {
+                        $eq: user._id.toString()
+                    }
+                }
+            ]
+            }).then(show => {
                 if(show) {
                     res.status(200).send({show: show})
                 }
