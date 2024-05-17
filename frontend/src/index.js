@@ -6,9 +6,9 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <>
+  <div className="bg-gray-100 min-h-screen min-w-screen">
     <App />
-  </>
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

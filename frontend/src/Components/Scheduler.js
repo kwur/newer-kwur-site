@@ -9,6 +9,19 @@ const Scheduler = () => {
     const [show, setShow] = useState(undefined)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
+    const hourToTime = (hour) => {
+        if (hour === 0) {
+            return "12:00 AM";
+        }
+        if (hour === 12) {
+            return "12:00 PM";
+        }
+        if (hour < 12) {
+            return hour + ":00 AM";
+        } else {
+            return hour - 12 + ":00 PM";
+        }
+    };
     useEffect(() => {
         if(!show) {
             findShowForUser().then(result => {
@@ -29,24 +42,21 @@ const Scheduler = () => {
             <Header />
             { loading === false ?
                 show ? 
-                <div className="flex flex-col align-middle justify-center">
-                    Your Show:
-                    <div>
-                        Show Name: {show.showName}
+                <div className="flex flex-col align-middle justify-center w-fit">
+                    <h1 className="font-header text-center align-middle text-4xl">Your Show</h1>
+                    <div className="text-red-500 font-mono text-xl">
+                        {show.showName}
                     </div>
-                    <div>
-                        Show Day: {show.showTime.day}
+                    <div className="font-mono text-lg">
+                        {show.showTime.day}
                     </div>
-                    <div>
-                        Start Time: {show.showTime.startTime}
+                    <div className="font-mono">
+                        {hourToTime(show.showTime.startTime)} to {hourToTime(show.showTime.endTime)}
                     </div>
-                    <div>
-                        End Time: {show.showTime.endTime}
+                    <div className="text-gray-500 font-mono">
+                        {show.genre}
                     </div>
-                    <div>
-                        Genre: {show.genre}
-                    </div>
-                    <button onClick={()=>{
+                    <button className="bg-red-500 m-2 rounded p-2 text-white font-mono hover:bg-red-700" onClick={()=>{
                         removeShowForUser().then(result => {
                             if(result === true) {
                                 setShow(undefined)

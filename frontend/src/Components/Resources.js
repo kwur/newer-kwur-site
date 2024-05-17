@@ -1,7 +1,9 @@
+import Header from "./Header"
 
 
 const Resources = () => {
     return (<>
+    <Header />
     Resources page
     </>)
 }

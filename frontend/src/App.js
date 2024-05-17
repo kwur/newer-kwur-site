@@ -38,6 +38,8 @@ function App() {
           <Route path="/dj/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dj/resources" element={<Resources />} />
+          <Route path="/dj/showSchedule" element={<ShowSchedule />} />
           <Route path="/dj/scheduler" element={<Scheduler />} />
           <Route path="/dj/exec" element={<ExecHome />} />
           <Route path="/dj/accountVerification" element={<AccountVerification />} />
