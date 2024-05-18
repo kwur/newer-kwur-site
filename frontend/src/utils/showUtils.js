@@ -67,13 +67,8 @@ export function removeShowForUser() {
     })
 }
 export function getAllShows() {
-    const token = localStorage.getItem("token")
-    if(!token) {
-        return Promise.resolve(1)
-    }
     return axios.get(url + "/allShows", {
         headers: {
-            Authorization: "Bearer " + token,
             "Content-Type": "application/json"
         }
     }).then(result => {

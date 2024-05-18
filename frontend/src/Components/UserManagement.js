@@ -1,11 +1,15 @@
 import { useState } from "react"
 import UserSearch from "./UserSearch"
-import { removeOtherUser } from "../utils/userUtils"
+import { changeUserRole, removeOtherUser } from "../utils/userUtils"
 import ChangeRolePopup from "./ChangeRolePopup"
 
 const UserManagement = () => {
     const [selectedUser, setSelectedUser] = useState()
+    const [showChangeRole, setShowChangeRole] = useState(false)
     return (<>
+    <div className="font-header text-xl">
+        User Management Console
+    </div>
     { !selectedUser 
     ? <>
         Select a user to begin: 
@@ -36,9 +40,9 @@ const UserManagement = () => {
                 })
             }
         }}>Remove user</button>
-        <button>Change user role</button>
-        <ChangeRolePopup show={true} user={selectedUser} />
-        <button>Change user information</button>
+        <button onClick={()=>setShowChangeRole(!showChangeRole)}>Change user role</button>
+        <ChangeRolePopup show={showChangeRole} user={selectedUser} />
+        {/* <button>Change user information</button> */}
     </div>
 
     <button onClick={() => setSelectedUser()}>select another user</button>

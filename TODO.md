@@ -38,7 +38,7 @@ GM:
 PERSONNEL ABILITIES:
 [ ] god powers over shows
 [ ] upgrade users to exec roles
-[ ] crediting system
+[X] crediting system
 [ ] open/close scheduling
 
 ABOUT PAGE:

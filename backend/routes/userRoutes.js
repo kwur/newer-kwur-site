@@ -221,6 +221,15 @@ router.post("/userSearch", (req, res) => {
             userModel.find({
                 $or: [
                     {
+                        "$expr": {
+                            "$regexMatch": {
+                              "input": { "$concat": ["$firstName", " ", "$lastName"] },
+                              "regex": req.body.search,
+                              "options": "i"
+                            }
+                          }
+                    },
+                    {
                         firstName: {
                             $regex: req.body.search,
                             $options: "i"
@@ -409,6 +418,49 @@ router.post("/changeUserRole", (req, res) => {
                 }
                 else {
                     res.sendStatus(404)
+                }
+            }).catch(e => {
+                console.log(e)
+                res.status(500).send({error: e})
+            })
+        }
+    })(req, res)
+})
+
+router.post("/updateUserCredits", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            userModel.findByIdAndUpdate(req.body.id, { $set:  {credits: req.body.newCreditAmount}}).then(oldUser => {
+                if(oldUser) {
+                    res.sendStatus(200)
+                }
+            }).catch(e => {
+                console.log(e)
+                res.status(500).send({error: e})
+            })
+        }
+    })(req, res)
+})
+router.post("/incrementUserCredits", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            userModel.findByIdAndUpdate(req.body.id, { $inc:  {credits: req.body.incrementBy}}).then(oldUser => {
+                if(oldUser) {
+                    res.sendStatus(200)
                 }
             }).catch(e => {
                 console.log(e)

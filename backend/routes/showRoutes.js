@@ -237,36 +237,25 @@ router.delete("/deleteShow", (req, res) => {
 })
 
 router.get("/allShows", (req, res) => {
-    passport.authenticate("jwt", { session: false }, (error, user) => {
-        if (error) {
-            console.log(error)
-            res.status(500).send({ error: error })
+    showModel.find().then(shows => {
+        const showMap = {
+            "Sunday": [],
+            "Monday": [],
+            "Tuesday": [],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [],
+            "Saturday": []
         }
-        else if (!user) {
-            res.status(401).send({ error: "invalid auth" })
+        for(var index in shows) {
+            const show = shows[index]
+            showMap[show.showTime.day].push(show)
         }
-        else {
-            showModel.find().then(shows => {
-                const showMap = {
-                    "Sunday": [],
-                    "Monday": [],
-                    "Tuesday": [],
-                    "Wednesday": [],
-                    "Thursday": [],
-                    "Friday": [],
-                    "Saturday": []
-                }
-                for(var index in shows) {
-                    const show = shows[index]
-                    showMap[show.showTime.day].push(show)
-                }
-                console.log(showMap)
-                res.status(200).send({shows: showMap})
-            }).catch(e => {
-                console.log(e)
-                res.status(500).send({error: e})
-            })
-        }
-    })(req, res)
+        console.log(showMap)
+        res.status(200).send({shows: showMap})
+    }).catch(e => {
+        console.log(e)
+        res.status(500).send({error: e})
+    })
 })
 module.exports = router

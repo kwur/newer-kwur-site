@@ -172,6 +172,7 @@ export function removeOtherUser(userId) {
         return result.status === 200
     }).catch(e => console.log(e))
 }
+
 export function changeUserRole(userId, newRole) {
     const token = localStorage.getItem("token")
     if(!token) {
@@ -188,3 +189,37 @@ export function changeUserRole(userId, newRole) {
         return result.status === 201
     }).catch(e => console.log(e))
 }
+
+export function setUserCredits(userId, newCreditAmount) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/updateUserCredits", {
+        id: userId,
+        newCreditAmount: newCreditAmount
+    }, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.status === 200
+    }).catch(e => console.log(e)) 
+}
+export function incrementUserCredits(userId, amountToAdd) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/users/incrementUserCredits", {
+        id: userId,
+        incrementBy: amountToAdd
+    }, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.status === 200
+    }).catch(e => console.log(e)) 
+}
+

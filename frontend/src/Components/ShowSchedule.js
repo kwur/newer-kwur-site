@@ -54,7 +54,7 @@ const ShowSchedule = () => {
                 <div className="flex-col">
                     <div className="flex-col items-center justify-center">
                         <div className="font-header text-4xl text-center">
-                            KWUR 90.3 SHOW SCHEDULE
+                            KWUR 90.3 FM SHOW SCHEDULE
                         </div>
                         <div className="flex justify-center">
                             {Object.keys(genresToColors).map((genre) => {

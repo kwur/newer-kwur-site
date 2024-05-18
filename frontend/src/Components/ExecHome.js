@@ -2,14 +2,20 @@ import { useEffect, useState } from "react"
 import Header from "./Header"
 import { getLoggedInUser } from "../utils/userUtils"
 import Loading from "./Loading"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import GMDashboard from "./GMDashboard"
+import Crediting from "./Crediting"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
     useEffect(() => {
         getLoggedInUser().then(u => {
+            console.log(u)
+            if(u === 1) {
+                navigate("/login")
+            }
             setLoading(false)
             if(!user) {
                 setUser(u)
@@ -28,7 +34,9 @@ const ExecHome = () => {
                 </>
                 : user.role === "GM" 
                     ? <GMDashboard />
-                    : "Exec Dashboard"
+                    : user.role === "personnel"
+                        ? <Crediting />
+                        : "Exec Dashboard"
         }
     </>)
 }
