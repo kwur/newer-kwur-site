@@ -223,3 +223,18 @@ export function incrementUserCredits(userId, amountToAdd) {
     }).catch(e => console.log(e)) 
 }
 
+export function logout() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    localStorage.removeItem("token")
+    return axios.get(url + "/users/logout", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        console.log(result)
+        return result.status === 200
+    }).catch(e => console.log(e))
+}

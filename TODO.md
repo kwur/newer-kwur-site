@@ -5,7 +5,7 @@ LOGIN/SIGNUP:
 [X] make signup page accessible
 [X] automatically log in after sign up 
 [X] validate emails
-[ ] sign out button
+[X] sign out button
 
 
 SCHEDULER:

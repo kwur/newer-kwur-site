@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import Logout from "./Logout"
  
 const Header = () => {
     const currentPage = window.location.pathname
@@ -13,6 +14,7 @@ const Header = () => {
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/dj/exec">Exec</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to="/dj/resources">Resources</Link>
                 <Link className="align-baseline hover:text-white hover:font-bold hover:bg-red-500 hover:rounded h-fit px-2" to= "/home">Back to KWUR</Link>
+                <Logout />
             </header>    
             :
             <header className="space-x-12 text-3xl leading-10 font-subtitle align-middle pt-5 flex justify-center w-full">
