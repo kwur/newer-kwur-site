@@ -3,6 +3,7 @@ const express = require("express")
 const passport = require("passport")
 const showModel = require("../models/Show")
 const userModel = require("../models/User")
+const schedulerOpenModel = require("../models/SchedulerOpen")
 const emailer = require("../sendEmail")
 require("dotenv").config()
 
@@ -197,12 +198,12 @@ router.get("/findShowForUser", (req, res) => {
                 }
             ]
             }).then(show => {
-                if(show) {
+                // if(show) {
                     res.status(200).send({show: show})
-                }
-                else {
-                    res.sendStatus(404)
-                }
+                // }
+                // else {
+                    // res.sendStatus(404)
+                // }
             }).catch(e => {
                 console.log(e)
                 res.sendStatus(500)
@@ -257,5 +258,58 @@ router.get("/allShows", (req, res) => {
         console.log(e)
         res.status(500).send({error: e})
     })
+})
+
+router.post("/openScheduling", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            console.log("asfd")
+            schedulerOpenModel.findOneAndUpdate({status: req.body.close}, { $set: {status: req.body.open}}).then(result => {
+                console.log(result)
+                if(result) {
+                    res.status(200).send({message: "scheduling opened"})
+                }
+                else {
+                    schedulerOpenModel.create({status: true, dateChanged: Date.now()})
+                    res.status(500).send({error: "couldn't update the scheduler"})
+                }
+            }).catch(e => {
+                console.log(e)
+                res.status(500).send({error: e })
+            })
+        }
+    })(req, res)
+})
+router.get("/schedulerStatus", (req, res) => {
+    passport.authenticate("jwt", { session: false }, (error, user) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send({ error: error })
+        }
+        else if (!user) {
+            res.status(401).send({ error: "invalid auth" })
+        }
+        else {
+            schedulerOpenModel.find({}).then(item => {
+                if(item) {
+                    res.status(200).send({status: item[0].status})
+                }
+                else {
+                    schedulerOpenModel.create({status: false, dateChanged: Date.now()})
+                    res.status(404).send({message: "could not locate doc. something is wrong"})
+                }
+            }).catch(e => {
+                console.log(e)
+                res.status(500).send({error: e})
+            })
+        }
+    })(req, res)
 })
 module.exports = router

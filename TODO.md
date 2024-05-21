@@ -25,13 +25,13 @@ SCHEDULE:
 
 EXEC: 
 [ ] does anyone in exec need abilities besides GM and personnel.... i dont know
-[ ] use different roles 
+[X] use different roles 
 [X] account verification thru GM or personnel
-[ ] upload new join pdf 
-[ ] upload images to be displayed? 
+[X] upload new join pdf 
+[X] upload images to be displayed? 
 
 GM:
-[ ] god powers over DJ and exec accounts
+[X] god powers over DJ and exec accounts
 [X] have to verify through the email account
 
 
@@ -39,10 +39,11 @@ PERSONNEL ABILITIES:
 [ ] god powers over shows
 [ ] upgrade users to exec roles
 [X] crediting system
-[ ] open/close scheduling
+[X] open/close scheduling
 
 ABOUT PAGE:
-[ ] get pictures?
+[X] get pictures?
+[ ] display long carousel of pictures from spencer
 
 JOIN PAGE:
 [ ] use cloudinary to upload and retrieve join PDFs

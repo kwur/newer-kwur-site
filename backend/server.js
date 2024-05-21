@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 require("dotenv").config()
 const userRoutes = require("./routes/userRoutes")
 const showRoutes = require("./routes/showRoutes")
+const fileRoutes = require("./routes/fileRoutes")
 const session = require("express-session") 
 const cors = require('cors')  
 const Strategy = require("passport-local").Strategy
@@ -132,6 +133,7 @@ passport.use("signup", new Strategy({
 
 app.use("/users", userRoutes)
 app.use("/shows", showRoutes)
+app.use("/files", fileRoutes)
 
 
 

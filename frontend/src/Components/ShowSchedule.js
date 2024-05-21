@@ -121,6 +121,7 @@ const ShowSchedule = () => {
                                                             <div
                                                                 style={{
                                                                     height: "2em",
+                                                                    width: "9em",
                                                                     "border-style": "dashed",
                                                                     borderWidth: "0.5px",
                                                                     // backgroundColor: hour % 2 === 0 ? "white" : "lightgray"
@@ -145,6 +146,7 @@ const ShowSchedule = () => {
                                                                         showNow.showTime.startTime) *
                                                                     2 +
                                                                     "em",
+                                                                width: "9em",
                                                                 backgroundColor: color,
                                                             }}
                                                             className={`font-mono p-2 overflow-y-hidden break-all`}

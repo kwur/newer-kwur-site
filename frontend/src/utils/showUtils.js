@@ -77,3 +77,36 @@ export function getAllShows() {
         console.log(e)
     })
 }
+export function checkIfSchedulerOpen() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.get(url + "/schedulerStatus", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(status => {
+        // console.log(status)
+        return status.data.status
+    }).catch(e => {
+        console.log(e)
+    })
+}
+
+export function changeScheduler(oldStatus, newStatus) {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.post(url + "/openScheduling", {
+        close: oldStatus,
+        open: newStatus
+    }, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => result.status === 200).catch(e => {
+        console.log(e)
+    })
+}

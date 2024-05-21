@@ -1,5 +1,6 @@
 // import { useNavigate } from "react-router"
 import Header from "./Header" 
+import FileViewer from "./FileViewer"
 
 const Home = () => {
     // const token = localStorage.getItem("token")
@@ -15,6 +16,7 @@ const Home = () => {
                     <div className="text-red-500 font-subtitle text-3xl text-center">
                         Student-run St. Louis Underground Radio
                     </div>
+                    <FileViewer location="/carousel" carousel={true} />
                 </div>
             </div>
         </div>

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import CreateShow from "./CreateShow"
 import Header from "./Header"
-import { findShowForUser, removeShowForUser } from "../utils/showUtils"
+import { checkIfSchedulerOpen, findShowForUser, removeShowForUser } from "../utils/showUtils"
 import { useNavigate } from "react-router-dom"
 import Loading from "./Loading"
 
 const Scheduler = () => {
     const [show, setShow] = useState(undefined)
     const [loading, setLoading] = useState(true)
+    const [schedulerOpen, setSchedulerOpen] = useState(false)
     const navigate = useNavigate()
     const hourToTime = (hour) => {
         if (hour === 0) {
@@ -23,19 +24,33 @@ const Scheduler = () => {
         }
     };
     useEffect(() => {
-        if(!show) {
-            findShowForUser().then(result => {
-                if(result === 1) {
-                    // user is not logged in
-                    navigate("/login")
+        const getInfo = async () => {
+            if(!show) {
+                try {
+                    const result = await findShowForUser()
+                    if(result === 1) {
+                        // user is not logged in
+                        navigate("/login")
+                    }
+                    setShow(result)
+                    const open = await checkIfSchedulerOpen()
+                    console.log("scheduler open?", open)
+                    if(open === true || open === false) { //stupid JS truthy
+                        setSchedulerOpen(open)
+                        setLoading(false)
+                    }
+                    else {
+                        alert("Something went wrong loading the scheduler. Please try again later.")
+                        navigate("/dj/dashboard")
+                    }
                 }
-                setLoading(false)
-                setShow(result)
-            }).catch(e => {
-                console.log(e)
-                setLoading(false)
-            })
+                catch(e) {
+                    console.log(e)
+                    setLoading(false)
+                }
+            }
         }
+        getInfo()
     })
     return (
         <>
@@ -65,12 +80,17 @@ const Scheduler = () => {
                                 alert("Something went wrong. Please try again later.")
                             }
                         })
-                    }}>Remove this show</button>
+                    }}>Cancel this show</button>
                 </div>
-                :
-                <div className="w-screen flex justify-center">
-                    <CreateShow />
-                </div>
+                :    
+                    schedulerOpen === true 
+                        ?
+                        <div className="w-screen flex justify-center">
+                            <CreateShow />
+                        </div>
+                        : <div>
+                            Scheduler is currently closed.
+                        </div>
                 :
                 <Loading />
             }

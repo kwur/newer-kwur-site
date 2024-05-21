@@ -5,6 +5,8 @@ import Loading from "./Loading"
 import { Link, useNavigate } from "react-router-dom"
 import GMDashboard from "./GMDashboard"
 import Crediting from "./Crediting"
+import SetSchedulerStatus from "./SetSchedulerStatus"
+import UploadFile from "./UploadFile"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
@@ -27,16 +29,26 @@ const ExecHome = () => {
         <Header />
         { loading === true 
             ?  <Loading />
-            : user.role === "dj" 
+            : user?.role === "dj" 
                 ? <>
                     { Date.now().getFullYear() + " Exec Board:"}
                     <Link to="/dj/accountVerification">Need to create a GM acccount? Click here. </Link>
                 </>
-                : user.role === "GM" 
-                    ? <GMDashboard />
-                    : user.role === "personnel"
-                        ? <Crediting />
-                        : "Exec Dashboard"
+                : <>
+                Hello Exec
+                <UploadFile />
+                {
+                    user?.role === "GM" 
+                        ? <GMDashboard />
+                        : user?.role === "personnel"
+                            ? <>
+                                <Crediting />
+                                <SetSchedulerStatus />
+                            </>
+                            : "Exec Dashboard"
+
+                }
+                </>
         }
     </>)
 }
