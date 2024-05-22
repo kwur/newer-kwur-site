@@ -238,3 +238,9 @@ export function logout() {
         return result.status === 200
     }).catch(e => console.log(e))
 }
+
+export function getExec() {
+    return axios.get(url + "/users/currentExec").then(users => {
+        return users.data.exec
+    }).catch(e => console.log(e))
+}

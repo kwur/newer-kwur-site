@@ -3,7 +3,7 @@ import Header from "./Header"
 const About = () => {
     return (<>
     <Header />
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-20 lg:pt-0">
         <div className="flex flex-col items-center">
             <h1 className="font-header text-7xl pb-10">About KWUR</h1>
             <div className="font-mono text-lg w-10/12">

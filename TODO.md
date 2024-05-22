@@ -6,6 +6,7 @@ LOGIN/SIGNUP:
 [X] automatically log in after sign up 
 [X] validate emails
 [X] sign out button
+[ ] forgot password
 
 
 SCHEDULER:
@@ -17,11 +18,13 @@ SCHEDULER:
 [ ] style show already created page
 [X] search for user when selecting coDJ
 [ ] maybe make genre checkbox
+[ ] remove all past semester shows
 
 SCHEDULE: 
 [X] display all shows in database to everyone
 [X] color code based off of genre
     - !!! does this mean that genres should be validated? 
+[ ] display DJ names with show
 
 EXEC: 
 [ ] does anyone in exec need abilities besides GM and personnel.... i dont know
@@ -43,19 +46,19 @@ PERSONNEL ABILITIES:
 
 ABOUT PAGE:
 [X] get pictures?
-[ ] display long carousel of pictures from spencer
+[X] display long carousel of pictures from spencer
 
 JOIN PAGE:
-[ ] use cloudinary to upload and retrieve join PDFs
+[X] use cloudinary to upload and retrieve join PDFs
 [ ] link to WUGO?
 
 SUPPORT PAGE:
-[ ] link to washu dono
-[ ] link to bandcamp
+[X] link to washu dono
+[X] link to bandcamp
 
 
 CONTACT PAGE:
-[ ] render exec board based off of accounts
+[X] render exec board based off of accounts
 [ ] add contact info 
 
 RESOURCES PAGE: 

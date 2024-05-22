@@ -14,27 +14,40 @@ const FileViewer = (props) => {
     }, [])
     return (<>
     {
-        files.length > 0 &&
-        props.carousel ? 
-        <Carousel width="20%" dynamicHeight={true} renderIndicator={() => {}} infiniteLoop={true} showThumbs={false}>
+        <div className="flex justify-center items-center w-full">
             {
-                files.map(file => {
-                    if(file.fileType !== "PDF") {
-                        return <div>
-                            <img src={file.sourceUrl}></img>
-                        </div>
+                files.length > 0 &&
+                props.carousel ? 
+                <Carousel className="flex justify-center border-[20px] z-10 border-red-500 mt-10 w-[90%] md:w-[40%]" 
+                    dynamicHeight={true} 
+                    renderIndicator={() => {}} 
+                    infiniteLoop={true} 
+                    showThumbs={false}
+                    autoPlay={true}
+                    swipeable={true}
+                    emulateTouch={true}
+                    showStatus={false}
+                >
+                    {
+                        files.map(file => {
+                            if(file.fileType !== "PDF") {
+                                return <div>
+                                    <img src={file.sourceUrl}></img>
+                                </div>
+                            }
+                        })
                     }
+                </Carousel> 
+                :
+                files.map((file) => {
+                    if(file.fileType === "PDF") {
+                        return <embed src={file.sourceUrl} width= "500" height= "375" />
+                    }
+                    console.log(file.sourceUrl)
+                    return <img src={file.sourceUrl}></img>
                 })
             }
-        </Carousel> 
-        :
-        files.map((file) => {
-            if(file.fileType === "PDF") {
-                return <embed src={file.sourceUrl} width= "500" height= "375" />
-            }
-            console.log(file.sourceUrl)
-            return <img src={file.sourceUrl}></img>
-        })
+        </div>
     }
     </>)
 }

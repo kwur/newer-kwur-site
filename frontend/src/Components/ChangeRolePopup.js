@@ -10,7 +10,16 @@ const ChangeRolePopup = (props) => {
         }}>
         <option selected={newRole==="dj"} value="dj">DJ</option>
         <option selected={newRole==="personnel"} value="personnel">Personnel</option>
-        <option selected={newRole==="exec"} value="exec">Exec</option>
+        <option selected={newRole==="treasurer"} value="treasurer">Treasurer</option>
+        <option selected={newRole==="training"} value="training">Training</option>
+        <option selected={newRole==="promotions"} value="promotions">Promotions</option>
+        <option selected={newRole==="communityrelations"} value="communityrelations">Community Relations</option>
+        <option selected={newRole==="artdirector"} value="artdirector">Art Director</option>
+        <option selected={newRole==="events"} value="events">Events</option>
+        <option selected={newRole==="productioncoordinator"} value="productioncoordinator">Production Coordinator</option>
+        <option selected={newRole==="musicdirectorintraining"} value="musicdirectorintraining">Music Director in Training</option>
+        <option selected={newRole==="stationmanager"} value="stationmanager">Station Manager</option>
+        <option selected={newRole==="webmaster"} value="webmaster">Webmaster</option>
     </select>
     return (<div className={`${props.show === false ? "hidden" : ""}`}>
         Changing {props.user.firstName}'s role. 

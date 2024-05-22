@@ -470,5 +470,15 @@ router.post("/incrementUserCredits", (req, res) => {
     })(req, res)
 })
 
+router.get("/currentExec", (req, res) => {
+    userModel.find({ role: {$not: {$eq: "dj"}}}).then(execs => {
+        // don't send unnecessary info like passwords or ids
+        res.status(200).send({exec: execs.map(exec => {return {firstName: exec.firstName, lastName: exec.lastName, email: exec.email, role: exec.role}})})
+    }).catch(e => {
+        console.log(e)
+        res.status(500).send({error: e})
+    })
+})
+
 
 module.exports = router

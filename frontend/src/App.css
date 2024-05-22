@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities; 
 @font-face {
     font-family: FuzzySlippers;
     src: url("../public/VTCFuzzypunkyslippers.ttf");
@@ -17,3 +14,7 @@
 @import url("https://use.typekit.net/qcu4zrh.css");
 @import url("https://use.typekit.net/fei0gky.css");
 @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
