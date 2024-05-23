@@ -69,6 +69,9 @@ const Login = (props) => {
                     <div className="font-subtitle pt-10 text-2xl">
                         No account? <Link className="text-red-500 hover:text-3xl hover:text-red-600" to="/signup">Sign up here.</Link>
                     </div>
+                    <div className="font-subtitle pt-10 text-2xl">
+                        Forgot your password? <Link className="text-red-500 hover:text-3xl hover:text-red-600" to="/forgotPassword">Reset it here.</Link>
+                    </div>
                 </div>
             </form>
         </div>

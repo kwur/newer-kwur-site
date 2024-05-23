@@ -59,7 +59,7 @@ router.post("/initiateReset", (req, res) => {
                 createdAt: Date.now()
             }).then((createdToken) => {
                 const resetLink = url + "/passwordReset?token=" + resetToken + "&user=" + user._id
-                sendEmail(user.email, resetLink)
+                sendEmail(user.email, resetLink, true)
             }).catch(e => {
                 res.status(418).send({ "error": e })
             }) // from https://blog.logrocket.com/implementing-secure-password-reset-node-js/#password-request-service

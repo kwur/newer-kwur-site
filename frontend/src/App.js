@@ -20,6 +20,8 @@ import UserSearch from './Components/UserSearch';
 import AccountVerification from './Components/AccountVerification';
 import HandleGMRequest from './Components/HandleGMRequest';
 import ShowSchedule from './Components/ShowSchedule';
+import ForgotPassword from './Components/ForgotPassword';
+import PasswordReset from './Components/PasswordReset';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/showSchedule" element={<ShowSchedule />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/passwordReset" element={<PasswordReset />} />
           <Route path="/services" element={<Services />} />
           <Route path="/join" element={<Join />} />
           <Route path="/support" element={<Support />} />

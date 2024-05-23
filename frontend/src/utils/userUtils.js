@@ -1,5 +1,5 @@
 import axios from "axios"
-const url = "http://localhost:3001"
+const url = process.env.REACT_APP_BACKEND_URL
 /**
  * Attempt to log user in based off of given information. If success
  * @param  username 
@@ -243,4 +243,16 @@ export function getExec() {
     return axios.get(url + "/users/currentExec").then(users => {
         return users.data.exec
     }).catch(e => console.log(e))
+}
+export function forgotPassword(userEmail) {
+    return axios.post(url + "/users/initiateReset", {
+        email: userEmail
+    },
+        {
+            headers: {
+                "ngrok-skip-browser-warning": true
+            }
+        }).then((res) => {
+            // const resetLink = res.data.resetLink
+        }).catch(e => console.log(e))
 }

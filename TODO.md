@@ -6,7 +6,7 @@ LOGIN/SIGNUP:
 [X] automatically log in after sign up 
 [X] validate emails
 [X] sign out button
-[ ] forgot password
+[X] forgot password
 
 
 SCHEDULER:
