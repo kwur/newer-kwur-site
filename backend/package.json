@@ -4,6 +4,7 @@
   "description": "new kwur site backend",
   "main": "server.js",
   "scripts": {
+    "run": "npm i && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Victoria Prisco",
