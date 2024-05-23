@@ -13,9 +13,9 @@ const Home = () => {
                     <div className="text-red-500 font-subtitle text-3xl text-center">
                         Student-run St. Louis Underground Radio
                     </div>
-                    <img src="/wave_1.gif" className="absolute z-0 w-[110vw] h-1/2 left-0">
+                    {/* <img src="/wave_1.gif" className="absolute z-0 w-[110vw] h-1/2 left-0">
 
-                    </img>
+                    </img> */}
                     <FileViewer className="z-10" location="/carousel" carousel={true} />
                 </div>
             </div>
