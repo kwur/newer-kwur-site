@@ -2,9 +2,10 @@ import { useState } from "react"
 import { changeUserRole } from "../utils/userUtils"
 
 const ChangeRolePopup = (props) => {
-    const [newRole, setNewRole] = useState()
+    const [newRole, setNewRole] = useState("dj")
 
     const dropdown = <select 
+        className="font-mono px-2"
         onChange={(e) => {
             setNewRole(e.target.value)
         }}>
@@ -21,20 +22,34 @@ const ChangeRolePopup = (props) => {
         <option selected={newRole==="stationmanager"} value="stationmanager">Station Manager</option>
         <option selected={newRole==="webmaster"} value="webmaster">Webmaster</option>
     </select>
-    return (<div className={`${props.show === false ? "hidden" : ""}`}>
-        Changing {props.user.firstName}'s role. 
+    return (<div className={`${props.show === false ? "hidden" : ""} font-subtitle text-xl`}>
         { newRole 
             ? <>
                 Change to {dropdown}?
-                <button onClick={() => {
+                <button 
+                className="bg-green-500 p-1 m-1 rounded hover:bg-green-800 hover:text-white"
+                onClick={() => {
                     changeUserRole(props.user._id, newRole).then(result => {
-                        console.log(result)
+                        if(result == true) {
+                            alert("success!")
+                        }
+                        else {
+                            alert("oopsies. something went wrong")
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                        alert("erra")
                     })
                 }}>Yes</button>
-                <button onClick={()=>setNewRole()}>Cancel</button>
+                <button 
+                className="bg-red-500 p-1 m-1 rounded hover:bg-red-800 hover:text-white"
+                onClick={()=>setNewRole()}>Cancel</button>
             </>
             : 
-            dropdown
+            <div>
+                Changing {props.user.firstName}'s role to:
+                {dropdown}
+            </div>
         }
     </div>)
 }

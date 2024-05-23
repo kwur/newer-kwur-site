@@ -20,19 +20,19 @@ const Dashboard = () => {
             if(!user) {
                 setUser(loggedInUser)
             }
-        }).catch(e => console.log("Error calling userUtils.getLoggedInUser in Dashboard.js"))
+        }).catch(e => console.log("Error calling userUtils.getLoggedInUser in Dashboard.js", e))
     })
-    return (<>
+    return (<div className="w-screen mx-auto">
     <Header />
-    <div className="flex justify-center">
+    <div className="pt-20 lg:pt-0 flex justify-center">
         <div className="flex-col w-fit">
             <div className="font-header text-red-500 text-6xl pt-10 text-center">
-                { user && <span>{user.firstName}'s Dashboard</span>}  {/*  only show this once the user has loaded */}
+                { user && <span>Welcome back {user.firstName} ;)</span>}  {/*  only show this once the user has loaded */}
             </div>
             <div className="text-red-500 font-subtitle text-4xl pt-10 text-center">
             </div>
         </div>
     </div>
-    </>)
+    </div>)
 }
 export default Dashboard 

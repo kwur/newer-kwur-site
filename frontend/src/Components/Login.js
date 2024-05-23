@@ -38,7 +38,7 @@ const Login = (props) => {
             }
         })
     }
-    return (<>
+    return (<div className="w-screen mx-auto">
         <Header />
         <div className="flex justify-center pt-10">
             <form onSubmit={handleLogin}>
@@ -72,6 +72,6 @@ const Login = (props) => {
                 </div>
             </form>
         </div>
-    </>)
+    </div>)
 }
 export default Login

@@ -53,34 +53,34 @@ const Scheduler = () => {
         getInfo()
     })
     return (
-        <>
+        <div className="w-screen mx-auto">
             <Header />
             { loading === false ?
                 show ? 
-                <div className="flex flex-col align-middle justify-center w-fit">
-                    <h1 className="font-header text-center align-middle text-4xl">Your Show</h1>
-                    <div className="text-red-500 font-mono text-xl">
-                        {show.showName}
+                <div className="flex justify-center w-screen mx-auto">
+                    <div className="flex flex-col align-middle mt-20  w-fit">
+                        <h1 className="font-header text-center align-middle text-5xl">Your Show</h1>
+                        <div className="text-red-500 text-center font-mono text-4xl lg:text-8xl">
+                            {show.showName}
+                        </div>
+                        <div className="font-mono text-center text-lg">
+                            {show.showTime.day + "s"}, 
+                            {" " + hourToTime(show.showTime.startTime)} to {hourToTime(show.showTime.endTime)}
+                        </div>
+                        <div className="text-gray-500 text-center font-mono">
+                            {show.genre}{show.coDJ && ", with " + show.coDJ.firstName + " " +show.coDJ.lastName}
+                        </div>
+                        <button className="bg-red-500 m-2 rounded p-2 text-white font-mono hover:bg-red-700" onClick={()=>{
+                            removeShowForUser().then(result => {
+                                if(result === true) {
+                                    setShow(undefined)
+                                }
+                                else {
+                                    alert("Something went wrong. Please try again later.")
+                                }
+                            })
+                        }}>Cancel this show</button>
                     </div>
-                    <div className="font-mono text-lg">
-                        {show.showTime.day}
-                    </div>
-                    <div className="font-mono">
-                        {hourToTime(show.showTime.startTime)} to {hourToTime(show.showTime.endTime)}
-                    </div>
-                    <div className="text-gray-500 font-mono">
-                        {show.genre}
-                    </div>
-                    <button className="bg-red-500 m-2 rounded p-2 text-white font-mono hover:bg-red-700" onClick={()=>{
-                        removeShowForUser().then(result => {
-                            if(result === true) {
-                                setShow(undefined)
-                            }
-                            else {
-                                alert("Something went wrong. Please try again later.")
-                            }
-                        })
-                    }}>Cancel this show</button>
                 </div>
                 :    
                     schedulerOpen === true 
@@ -94,7 +94,7 @@ const Scheduler = () => {
                 :
                 <Loading />
             }
-        </>
+        </div>
     )
 }
 export default Scheduler

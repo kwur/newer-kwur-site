@@ -34,7 +34,7 @@ const Signup = () => {
             }
         }).catch(e => console.log(e))
     }
-    return (<>
+    return (<div className="w-screen mx-auto">
         <Header />
         <div className="flex justify-center pt-10">
         <form onSubmit={handleSignup}>
@@ -91,6 +91,6 @@ const Signup = () => {
                 <input type="submit"/>
             </form> */}
         </div>
-    </>)
+    </div>)
 }
 export default Signup

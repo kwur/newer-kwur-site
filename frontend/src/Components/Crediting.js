@@ -76,23 +76,30 @@ const Crediting = () => {
             alert("The following users were not successfully updated: " + usersThatWerentDone.toString())
         }
     }
-    return (<>
-        <div>
+    return (<div className="border-2 border-red-700 p-5 rounded">
+        <div className="font-mono">
             users being changed: { usersToChange.map((user) => {
                 return user.firstName + " " + user.lastName
             })
             }
         </div>
-        Search for a user:
-        Batch update? (Entering a comma separated list) <input type="checkbox" onChange={(e) => setBatch(e.target.checked)}/>
+        <div className="font-mono text-red-500">
+        Batch update? <input type="checkbox" onChange={(e) => setBatch(e.target.checked)}/>
+        </div>
+        <div className="font-mono">
+            {batch === true ? "Enter a comma separated list:" : "Search for a user:"}
+        </div>
+        
         { batch === true 
-            ? <input type="text" onChange={(e) => setInputString(e.target.value)}/>
+            ? <input className="font-mono" type="text" onChange={(e) => setInputString(e.target.value)}/>
             : <UserSearch getSelected={(user) => setUsersToChange([...usersToChange, JSON.parse(user)])} />
         }
 
+        <div className="font-mono">
         Credits to add
-        <input type='number' onChange={(e) => setCreditsToAdd(e.target.value)}/>
-        <button onClick={addCreditsToEachUser}>add em</button>
-    </>)
+        </div>
+        <input className="font-mono w-[5em] text-center" type='number' onChange={(e) => setCreditsToAdd(e.target.value)}/>
+        <button className="bg-red-500 rounded p-2 text-white m-2 hover:bg-red-700 font-subtitle" onClick={addCreditsToEachUser}>add em</button>
+    </div>)
 }
 export default Crediting

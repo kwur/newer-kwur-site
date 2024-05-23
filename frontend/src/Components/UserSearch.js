@@ -12,7 +12,7 @@ const UserSearch = (props) => {
         }).catch(e => console.log(e))
     }
     return (<>
-        <input type="text" className="border-2" onChange={(e) => {
+        <input type="text" className="border-2 border-red-500 rounded" onChange={(e) => {
             setValue(e.target.value)
             setClicked(undefined)
             if(e.target.value === "") {

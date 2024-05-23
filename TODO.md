@@ -27,7 +27,7 @@ SCHEDULE:
 [ ] display DJ names with show
 
 EXEC: 
-[ ] does anyone in exec need abilities besides GM and personnel.... i dont know
+[X] does anyone in exec need abilities besides GM and personnel.... i dont know
 [X] use different roles 
 [X] account verification thru GM or personnel
 [X] upload new join pdf 
@@ -40,7 +40,7 @@ GM:
 
 PERSONNEL ABILITIES:
 [ ] god powers over shows
-[ ] upgrade users to exec roles
+[X] upgrade users to exec roles
 [X] crediting system
 [X] open/close scheduling
 
@@ -59,7 +59,7 @@ SUPPORT PAGE:
 
 CONTACT PAGE:
 [X] render exec board based off of accounts
-[ ] add contact info 
+[X]  add contact info 
 
 RESOURCES PAGE: 
 [ ] blog (ugh)
@@ -68,5 +68,5 @@ RESOURCES PAGE:
 MISC:
 [X] 404 page
 [X] user search
-[ ] overhaul styling because i kinda hate it now
-[ ] mobile responsive YUCK
+[X] mobile responsive YUCK
+[ ] remove warnings

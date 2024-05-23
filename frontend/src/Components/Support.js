@@ -44,7 +44,7 @@ const Support = () => {
                 </tbody>
             </table>
             </div>
-            <div className="pt-20 font-mono text-center text-red-500 hover:underline hover:text-red-700 text-lg w-10/12">
+            <div className="pt-20 font-mono text-center text-red-500 hover:underline hover:text-red-700 text-3xl w-10/12">
                 or <a href="https://kwur.bandcamp.com/">check out KWUR bandcamp!!!</a>
             </div>
         </div>

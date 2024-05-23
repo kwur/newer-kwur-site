@@ -5,7 +5,7 @@ import { stack as Menu } from 'react-burger-menu'
  
 const Header = () => {
     const currentPage = window.location.pathname
-    const isOnDJPage = currentPage.substring(0, 3) === "/dj" || currentPage === "/login"
+    const isOnDJPage = currentPage.substring(0, 3) === "/dj" //|| currentPage === "/login"
     return (
         <>
             <MediaQuery maxWidth={1024}>
@@ -35,7 +35,7 @@ const Header = () => {
                         left: "0",
                       },
                       bmMenu: {
-                        // background: 'rgb(239 68 68)',
+                        background: '#f0f0f0',
                         padding: '1.5em 0.5em 1.5em 0.5em',
                         fontSize: '1.15em'
                       },

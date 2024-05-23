@@ -31,18 +31,23 @@ const UploadFile = () => {
         }
     }
     return (<>
-        <form onSubmit={handleFileUpload}>
-            upload file:
-            <input id="file" type="file" multiple={true} onChange={(e) => setFileList(e.target.files)} />
-            where should it go (kwur.wustl.edu/[ENTER THIS PART])
-            <input type="text" onChange={(e) => {
+        <form className="border-2 rounded border-red-500 lg:w-fit w-screen m-2 p-2" onSubmit={handleFileUpload}>
+        <h1 className="font-header text-3xl">Upload a file to KWUR.WUSTL.EDU</h1>
+            <input id="file" className="font-subtitle" type="file" multiple={true} onChange={(e) => setFileList(e.target.files)} />
+            <div className="font-mono">
+                where do you want us to put it? (kwur.wustl.edu/[ENTER THIS PART])
+                <div className="py-3 text-gray-600">
+                    (note that any paths that are on the dj-side begin with "dj/")
+                </div>
+            </div>
+            <input type="text" className="font-mono m-1" placeholder="enter path here" onChange={(e) => {
                 var tempPath = e.target.value
                 if(tempPath.substring(0, 1) !== "/") {
                     tempPath = "/" + tempPath
                 }
                 setPath(tempPath)
             }} />
-            <input type="submit" />
+            <input className="font-header bg-red-500 p-1 m-1 text-white rounded" type="submit" />
         </form>
     </>)
 }
