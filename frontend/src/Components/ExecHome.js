@@ -8,6 +8,8 @@ import Crediting from "./Crediting"
 import SetSchedulerStatus from "./SetSchedulerStatus"
 import UploadFile from "./UploadFile"
 import ExecBoard from "./ExecBoard"
+import ChangeRolePopup from "./ChangeRolePopup"
+import UserManagement from "./UserManagement"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
@@ -51,6 +53,8 @@ const ExecHome = () => {
                                 ? <GMDashboard />
                                 : user?.role === "personnel"
                                     ? <>
+                                        is this ugly yes but its on purpose so its cool
+                                        <UserManagement />
                                         <Crediting />
                                         <SetSchedulerStatus />
                                     </>

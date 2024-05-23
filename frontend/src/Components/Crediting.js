@@ -77,6 +77,7 @@ const Crediting = () => {
         }
     }
     return (<div className="border-2 border-red-700 p-5 rounded">
+        <h1 className="font-header text-3xl">Crediting</h1>
         <div className="font-mono">
             users being changed: { usersToChange.map((user) => {
                 return user.firstName + " " + user.lastName

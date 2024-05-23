@@ -5,7 +5,7 @@ const ChangeRolePopup = (props) => {
     const [newRole, setNewRole] = useState("dj")
 
     const dropdown = <select 
-        className="font-mono px-2"
+        className="font-mono px-2 text-md"
         onChange={(e) => {
             setNewRole(e.target.value)
         }}>

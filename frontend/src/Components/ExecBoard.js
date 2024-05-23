@@ -33,30 +33,51 @@ const ExecBoard = () => {
         loading ? 
         <Loading />
         :
-        <table>
-            <thead className="font-subtitle text-3xl text-red-500">
-                <tr className="bg-gray-200">
-                    <th className="px-5">Role</th>
-                    <th className="px-5">Name</th>
-                    <th className="px-5">Email</th>
-                </tr>
-            </thead>
-            <tbody className="font-mono mx-[40em]">
+        <>
+            <div className="grid grid-cols-3 w-full lg:w-1/2 text-center">
+                <div className="text-center font-subtitle text-2xl font-bold bg-gray-200 text-red-500">
+                    Role
+                </div>
+                <div className="text-center font-subtitle text-2xl font-bold bg-gray-200 text-red-500">
+                    Name
+                </div>
+                <div className="text-center font-subtitle text-2xl font-bold bg-gray-200 text-red-500">
+                    Email
+                </div>
+            </div>
+
+            <div className="w-screen grid grid-rows-2 px-2 w-full lg:w-1/2 text-md lg:text-lg">
+                    
                 {exec && exec.map(person => {
-                    return <tr className="odd:bg-white">
-                        <td className="p-5">
-                            {dbNameToDisplayName[person.role]}
-                        </td>
-                        <td className="p-5">
-                            {person.firstName + " " + person.lastName}
-                        </td>
-                        <td className="p-5">
-                            {person.email}
-                        </td>
-                    </tr>
-                })}
-            </tbody>
-        </table>
+                        return <div className="grid grid-cols-3 odd:bg-white even:bg-gray-300">
+                            <div className="font-mono px-1 w-full break-words text-wrap text-center">
+                                {dbNameToDisplayName[person.role]}
+                            </div>
+                            <div className="font-mono px-1 w-full break-words text-wrap text-center">
+                                {person.firstName + " " + person.lastName}
+                            </div>
+                            <div className="font-mono px-1 w-full break-words text-wrap  text-center">
+                                {person.email}
+                            </div>
+                        </div>
+                    })
+                }
+        </div>
+        </>
+        // <table >
+        //     <thead className="w-screen px-[30em] font-subtitle text-3xl text-red-500">
+        //         <tr className=" mx-[30em]  bg-gray-200">
+        //             <th className="px-5">Role</th>
+        //             <th className="px-5">Name</th>
+        //             <th className="px-5">Email</th>
+        //         </tr>
+        //     </thead>
+        //     <tbody className="font-mono mx-[40em]">
+                
+        //             </tr>
+        //         })}
+        //     </tbody>
+        // </table>
     }
     </>)
 }
