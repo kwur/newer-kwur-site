@@ -48,7 +48,12 @@ export function findShowForUser() {
         headers: {
             Authorization: "Bearer " + token
         }
-    }).then(result => result.data.show)
+    }).then(result => {
+        if(result.data.pending) {
+            return 2
+        }
+        return result.data.show
+    })
 
 }
 

@@ -12,6 +12,9 @@ const Resources = () => {
             if(user === 1) {
                 navigate("/login")
             }
+            if(user.role === "pending") {
+                navigate("/pending")
+            }
         })
     })
     return (<div className="w-screen mx-auto">

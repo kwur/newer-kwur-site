@@ -22,6 +22,7 @@ import HandleGMRequest from './Components/HandleGMRequest';
 import ShowSchedule from './Components/ShowSchedule';
 import ForgotPassword from './Components/ForgotPassword';
 import PasswordReset from './Components/PasswordReset';
+import Pending from './Components/Pending';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/showSchedule" element={<ShowSchedule />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/passwordReset" element={<PasswordReset />} />
+          <Route path="/pending" element={<Pending />} />
           <Route path="/services" element={<Services />} />
           <Route path="/join" element={<Join />} />
           <Route path="/support" element={<Support />} />

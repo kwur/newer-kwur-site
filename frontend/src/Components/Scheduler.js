@@ -32,6 +32,9 @@ const Scheduler = () => {
                         // user is not logged in
                         navigate("/login")
                     }
+                    else if(result === 2) {
+                        navigate("/pending")
+                    }
                     setShow(result)
                     const open = await checkIfSchedulerOpen()
                     console.log("scheduler open?", open)

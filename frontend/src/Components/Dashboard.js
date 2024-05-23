@@ -18,6 +18,9 @@ const Dashboard = () => {
                 // navigate("/login")
             }
             if(!user) {
+                if(loggedInUser.role === "pending") {
+                    navigate("/pending")
+                }
                 setUser(loggedInUser)
             }
         }).catch(e => console.log("Error calling userUtils.getLoggedInUser in Dashboard.js", e))
