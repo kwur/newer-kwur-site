@@ -1,7 +1,8 @@
 {
     "name": "newer-kwur-site",
     "scripts": {
-        "build": "cd frontend && npm run build",
+        "build": "cd backend && node server.js",
+        "build-frontend": "cd frontend && npm run build",
         "test": "concurrently \"cd frontend && npm start \" \"cd backend && nodemon server.js \""
     }
 }
