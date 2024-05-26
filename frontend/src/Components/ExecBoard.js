@@ -19,6 +19,20 @@ const ExecBoard = () => {
         stationmanager: "Station Manager", 
         webmaster: "Nerd in Charge (Webmaster)"
     }
+    const dbNameToEmail = {
+        GM: "gm@kwur.com",
+        "personnel": "personnel@kwur.com",
+        "treasurer": "treasurer@kwur.com",
+        "training": "training@kwur.com",
+        "promotions": "promotions@kwur.com",
+        communityrelations: "communityrelations@kwur.com",
+        artdirector: "",
+        events: "events@kwur.com",
+        productioncoordinator: "prodcoord@kwur.com",
+        musicdirectorintraining: "",
+        stationmanager: "station@kwur.com", 
+        webmaster: "webmaster@kwur.com"
+    }
     useEffect(() => {
         getExec().then(members => {
             setExec(members)
@@ -57,7 +71,7 @@ const ExecBoard = () => {
                                 {person.firstName + " " + person.lastName}
                             </div>
                             <div className="font-mono px-1 w-full break-words text-wrap  text-center">
-                                {person.email}
+                                {dbNameToEmail[person.role]}
                             </div>
                         </div>
                     })

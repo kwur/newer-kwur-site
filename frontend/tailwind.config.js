@@ -20,7 +20,8 @@ module.exports = {
         "show": "url('../public/show_password.svg');",
         "hide": "url('../public/hide_password.svg');",
         "more": "url('../public/show-more.svg');",
-        "less": "url('../public/show-less.svg');"
+        "less": "url('../public/show-less.svg');",
+        "review": "url('../public/rsreview.jpg');"
       },
       fontSize: {
         "bigasfuck": "10rem;"
