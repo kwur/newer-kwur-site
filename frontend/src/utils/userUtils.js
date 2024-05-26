@@ -262,7 +262,6 @@ export function getPendings() {
     if(!token) {
         return Promise.resolve(1)
     }
-    localStorage.removeItem("token")
     return axios.get(url + "/users/pendingAccounts", {
         headers: {
             Authorization: "Bearer " + token

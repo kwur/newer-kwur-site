@@ -10,6 +10,7 @@ import UploadFile from "./UploadFile"
 import ExecBoard from "./ExecBoard"
 import ChangeRolePopup from "./ChangeRolePopup"
 import UserManagement from "./UserManagement"
+import PendingRoles from "./PendingRoles"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
@@ -56,6 +57,7 @@ const ExecHome = () => {
                                         is this ugly yes but its on purpose so its cool
                                         <UserManagement />
                                         <Crediting />
+                                        <PendingRoles />
                                         <SetSchedulerStatus />
                                     </>
                                     : "Exec Dashboard"

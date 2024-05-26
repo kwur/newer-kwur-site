@@ -16,7 +16,7 @@ const PendingRoles = () => {
         })
     }
     const handleDeny = (user) => {
-        const areYouSure = window.confirm("This will remove this users account. Are you sure you'd like to delete " + selectedUser.firstName + "'s KWUR account? This action is not reversible.")
+        const areYouSure = window.confirm("This will remove this users account. Are you sure you'd like to delete " + user.firstName + "'s KWUR account? This action is not reversible.")
         if(areYouSure === true) {
             removeOtherUser(user._id).then(status => {
                 if(status === true) {
@@ -40,18 +40,17 @@ const PendingRoles = () => {
     }, [])
     return (<>
         {
-            users ?
+            users &&
                 users.map((user) => {
                     return <>
-                        <h1 className="text-3xl text-red-500 w-fit">Would you like to approve {user.firstName} {user.lastName}'s DJ account?</h1>
+                        <h1 className="text-xl pt-10 text-red-500 w-fit font-mono">Would you like to approve {user.firstName} {user.lastName}'s DJ account?</h1>
                         <div className="flex m-5 space-x-5 justify-center">
                             <button className="hover:bg-green-700 w-fit text-white bg-green-500 rounded p-5" onClick={() => handleApprove(user)}>Yes</button>
                             <button className="hover:bg-red-700 w-fit text-white bg-red-500 rounded p-5" onClick={() => handleDeny(user)}>No</button>
                         </div>
                     </>
                 })
-            :
-            <Login redirect={window.location.href} />
         }
     </>)
 }
+export default PendingRoles
