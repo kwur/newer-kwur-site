@@ -15,7 +15,7 @@ SCHEDULER:
 [X] notify when bump
 [X] handle domino bumps 
 [X] handle bumping someone with no other choices
-[ ] style show already created page
+[X] style show already created page
 [X] search for user when selecting coDJ
 [ ] maybe make genre checkbox
 [ ] remove all past semester shows
