@@ -37,7 +37,7 @@ const UploadFile = () => {
             <div className="font-mono">
                 where do you want us to put it? (kwur.wustl.edu/[ENTER THIS PART])
                 <div className="py-3 text-gray-600">
-                    (note that any paths that are on the dj-side begin with "dj/")
+                    (note that any paths that are on the dj-side begin with "dj/, for the main page carousel, enter carousel")
                 </div>
             </div>
             <input type="text" className="font-mono m-1" placeholder="enter path here" onChange={(e) => {
