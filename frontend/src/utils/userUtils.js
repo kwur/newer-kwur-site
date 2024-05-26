@@ -256,3 +256,18 @@ export function forgotPassword(userEmail) {
             // const resetLink = res.data.resetLink
         }).catch(e => console.log(e))
 }
+
+export function getPendings() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    localStorage.removeItem("token")
+    return axios.get(url + "/users/pendingAccounts", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.data.users
+    }).catch(e => console.log(e))
+}
