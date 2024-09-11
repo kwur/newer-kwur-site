@@ -270,3 +270,17 @@ export function getPendings() {
         return result.data.users
     }).catch(e => console.log(e))
 }
+
+export function getAllDJs() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.get(url + "/users/djList", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => {
+        return result.data.DJs
+    }).catch(e => console.log(e))
+}

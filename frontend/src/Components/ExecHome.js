@@ -11,6 +11,7 @@ import ExecBoard from "./ExecBoard"
 import ChangeRolePopup from "./ChangeRolePopup"
 import UserManagement from "./UserManagement"
 import PendingRoles from "./PendingRoles"
+import DJList from "./DJList"
 
 const ExecHome = () => {
     const [user, setUser] = useState()
@@ -59,6 +60,7 @@ const ExecHome = () => {
                                         <Crediting />
                                         <PendingRoles />
                                         <SetSchedulerStatus />
+                                        <DJList />
                                     </>
                                     : "Exec Dashboard"
 
