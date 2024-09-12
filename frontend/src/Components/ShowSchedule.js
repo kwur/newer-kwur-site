@@ -59,7 +59,7 @@ const ShowSchedule = () => {
             ) : (
                 <div className="flex-col w-dvw">
                     <div className="pt-20 lg:pt-0 flex-col items-center justify-center">
-                        <div className="font-header text-3xl w-full lg:text-4xl text-center">
+                        <div className="font-header text-6xl px-10 lg:px-0 w-full lg:text-7xl text-center">
                             KWUR 90.3 FM SHOW SCHEDULE
                         </div>
                         <div className="lg:flex w-fit grid grid-cols-2 mx-auto justify-center">
@@ -119,15 +119,14 @@ const ShowSchedule = () => {
                                                             show.showTime.startTime <= hour &&
                                                             show.showTime.endTime > hour
                                                     );
-                                                    console.log("hello???", showsAtThisHour)
                                                     const showNow = showsAtThisHour[0];
                                                     // if there is no show at this time, return an empty cell
                                                     if (!showNow) {
                                                         return (
                                                             <div
                                                                 style={{
-                                                                    height: "2em",
-                                                                    width: "14em",
+                                                                    height: "4em",
+                                                                    width: "60vw",
                                                                     "border-style": "dashed",
                                                                     borderWidth: "0.5px",
                                                                     // borderColor: "black"
@@ -151,16 +150,24 @@ const ShowSchedule = () => {
                                                                 height:
                                                                     (showNow.showTime.endTime -
                                                                         showNow.showTime.startTime) *
-                                                                    2 +
+                                                                    4 +
                                                                     "em",
-                                                                width: "14em",
+                                                                width: "60vw",
                                                                 backgroundColor: color,
+                                                                borderStyle: "dashed",
+                                                                borderColor: "white",
+                                                                borderWidth: "0.75px",
+                                                                borderLeftWidth: "0px",
+                                                                borderRightWidth: "0px"
                                                             }}
-                                                            className={`font-mono p-2 overflow-y-hidden break-all`}
+                                                            className={`font-mono p-2 overflow-y-hidden break-words`}
                                                         >
                                                             {showNow && hour === showNow.showTime.startTime
                                                                 ? showNow.showName
                                                                 : ""}
+                                                                <div className="text-xs">
+                                                                with {`${showNow.dj} ${showNow.coDJ ? "and " + showNow.coDJ.firstName : ""}`}
+                                                                </div>
                                                         </p>
                                                     );
                                                 })}
@@ -192,8 +199,8 @@ const ShowSchedule = () => {
                                                         return (
                                                             <div
                                                                 style={{
-                                                                    height: "2em",
-                                                                    width: "11em",
+                                                                    height: "4em",
+                                                                    width: "12.75vw",
                                                                     "border-style": "dashed",
                                                                     borderWidth: "0.5px",
                                                                     // backgroundColor: hour % 2 === 0 ? "white" : "lightgray"
@@ -215,27 +222,26 @@ const ShowSchedule = () => {
                                                         <div
                                                         style={{
                                                             height:
-                                                                            (showNow.showTime.endTime -
-                                                                                showNow.showTime.startTime) *
-                                                                            2 +
-                                                                            "em",
-                                                                            width: "11em",
-                                                                            backgroundColor: color, 
-                                                                            borderStyle: "dashed",
-                                                                            borderColor: "white",
-                                                                            borderWidth: "0.75px",
-                                                                            borderLeftWidth: "0px",
-                                                                            borderRightWidth: "0px"
-                                                                    }}
-                                                                    className={`font-mono p-2 overflow-y-hidden break-all`}
-                                                                    >
-                                                                    {showNow && hour === showNow.showTime.startTime
-                                                                        ? showNow.showName
-                                                                        : ""}
-                                                                    {/* <div className="text-xs"> */}
-                                                                    {/* with {`${showNow.dj} ${showNow.coDJ ? "and " + showNow.coDJ.firstName : ""}`} */}
-                                                                    {/* </div> */}
-                                                                </div>
+                                                                ((showNow.showTime.endTime -
+                                                                    showNow.showTime.startTime) *
+                                                                4) + "em",
+                                                                width: "12.75vw",
+                                                                backgroundColor: color, 
+                                                                borderStyle: "dashed",
+                                                                borderColor: "white",
+                                                                borderWidth: "0.75px",
+                                                                borderLeftWidth: "0px",
+                                                                borderRightWidth: "0px",
+                                                        }}
+                                                        className={`font-mono p-2 overflow-y-scroll break-words`}
+                                                        >
+                                                        {showNow && hour === showNow.showTime.startTime
+                                                            ? showNow.showName
+                                                            : ""}
+                                                        <div className="text-xs">
+                                                        with {`${showNow.dj} ${showNow.coDJ ? "and " + showNow.coDJ.firstName : ""}`}
+                                                        </div>
+                                                    </div>
                                                     );
                                                 })}
                                             </div>
