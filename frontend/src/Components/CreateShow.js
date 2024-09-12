@@ -18,13 +18,17 @@ const CreateShow = () => {
             2: "second",
             3: "third"
         }
-        if(choice.day === "[Select a Day]" || !choice.startTime || !choice.endTime) { 
+        if(choice.day === "[Select a Day]" || !choice.startTime || isNaN(choice.endTime)) { 
             return `Please choose a day, start time, and end time for your ${number[numberChoice]} choice, then submit again.`
         }
         const startHour = choice.startTime
         const startMinute = choice.startTime
-        const endHour = choice.endTime
-        const endMinute = choice.endTime
+        var endHour = choice.endTime
+        var endMinute = choice.endTime
+        if (endHour === 0) {
+            endHour = 24;
+            // endMinute = 59
+        }
         if(startHour > endHour || (startHour === endHour && startMinute > endMinute)) {
             return "Please make sure that your show starts before it ends!"
         }
@@ -46,7 +50,8 @@ const CreateShow = () => {
         const firstChoiceDay = form.firstChoiceDay.value
         const firstChoiceStartTime = firstChoiceTime.startTime
         const firstChoiceEndTime = firstChoiceTime.endTime
-        if(firstChoiceDay === "[Select a Day]" || !firstChoiceStartTime  || !firstChoiceEndTime ) {
+        console.log(firstChoiceDay, firstChoiceStartTime, firstChoiceEndTime)
+        if(firstChoiceDay === "[Select a Day]" || !firstChoiceStartTime  || isNaN(firstChoiceEndTime)) {
             alert("Please choose a day, start time, and end time for your first choice, then submit again.")
             return
         }
@@ -64,6 +69,9 @@ const CreateShow = () => {
             alert(error)
             return
         }
+        if(firstChoice.endTime === 0) {
+            firstChoice.endTime = 24;
+        } // this is so stupid there must be a better way but idc
         var secondChoice = undefined
         var thirdChoice = undefined
         if(showSecond === true) {
@@ -77,6 +85,9 @@ const CreateShow = () => {
                 alert(error)
                 return
             }
+            if(secondChoiceTime.endTime === 0) {
+                secondChoiceTime.endTime = 24;
+            }
         }
         if(showThird === true) {
             thirdChoice = {
@@ -88,6 +99,9 @@ const CreateShow = () => {
             if(error) {
                 alert(error)
                 return
+            }
+            if(thirdChoiceTime.endTime === 0) {
+                thirdChoiceTime.endTime = 24;
             }
         }
         const createdShow = {
