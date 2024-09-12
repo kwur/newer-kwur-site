@@ -3,8 +3,6 @@ import { getAllShows } from "../utils/showUtils";
 import Header from "./Header";
 import Loading from "./Loading";
 import { useMediaQuery } from "react-responsive";
-import { Tooltip } from 'react-tooltip';
-import { getUserById } from "../utils/userUtils";
 import 'react-tooltip/dist/react-tooltip.css'
 
 const ShowSchedule = () => {
@@ -141,8 +139,8 @@ const ShowSchedule = () => {
                                                         return;
                                                     }
                                                     // return the beginning hour cell
-                                                    const color = genresToColors[showNow.genre]
-                                                        ? genresToColors[showNow.genre]
+                                                    const color = genresToColors[showNow.genre.toLowerCase()]
+                                                        ? genresToColors[showNow.genre.toLowerCase()]
                                                         : "pink";
                                                     return (
                                                         <p
@@ -200,7 +198,7 @@ const ShowSchedule = () => {
                                                             <div
                                                                 style={{
                                                                     height: "4em",
-                                                                    width: "12.75vw",
+                                                                    width: "12vw",
                                                                     "border-style": "dashed",
                                                                     borderWidth: "0.5px",
                                                                     // backgroundColor: hour % 2 === 0 ? "white" : "lightgray"
@@ -214,8 +212,8 @@ const ShowSchedule = () => {
                                                         return;
                                                     }
                                                     // return the beginning hour cell
-                                                    const color = genresToColors[showNow.genre]
-                                                        ? genresToColors[showNow.genre]
+                                                    const color = genresToColors[showNow.genre.toLowerCase()]
+                                                        ? genresToColors[showNow.genre.toLowerCase()]
                                                         : "pink";
                                                     console.log(showNow)
                                                     return (
@@ -225,7 +223,7 @@ const ShowSchedule = () => {
                                                                 ((showNow.showTime.endTime -
                                                                     showNow.showTime.startTime) *
                                                                 4) + "em",
-                                                                width: "12.75vw",
+                                                                width: "12vw",
                                                                 backgroundColor: color, 
                                                                 borderStyle: "dashed",
                                                                 borderColor: "white",
