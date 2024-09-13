@@ -230,6 +230,8 @@ const ShowSchedule = () => {
                                                                 borderWidth: "0.75px",
                                                                 borderLeftWidth: "0px",
                                                                 borderRightWidth: "0px",
+                                                                "-ms-overflow-style": "none",  /* Internet Explorer 10+ */
+                                                                "scrollbar-width": "none",  /* Firefox */
                                                         }}
                                                         className={`font-mono p-2 overflow-y-scroll break-words`}
                                                         >
