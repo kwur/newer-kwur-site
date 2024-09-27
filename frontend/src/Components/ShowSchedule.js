@@ -27,7 +27,7 @@ const ShowSchedule = () => {
         "Friday",
         "Saturday",
     ];
-    const timeSlots = [...Array(24).keys()]; // silly goofy way to create an array with values from 0 to 24
+    const timeSlots = [...Array(24).keys()].slice(5); // silly goofy way to create an array with values from 0 to 24
     const hourToTime = (hour) => {
         if (hour === 0) {
             return "12:00 AM";
@@ -158,7 +158,7 @@ const ShowSchedule = () => {
                                                                 borderLeftWidth: "0px",
                                                                 borderRightWidth: "0px"
                                                             }}
-                                                            className={`font-mono p-2 overflow-y-hidden break-words`}
+                                                            className={`font-mono p-2 overflow-y-scroll break-words`}
                                                         >
                                                             {showNow && hour === showNow.showTime.startTime
                                                                 ? showNow.showName
