@@ -10,6 +10,9 @@
     font-family: Try;
     src: url("../public/PicNic-Regular.otf");
 }
+#root {
+    width: 100vw;
+}
 @import url("https://use.typekit.net/abq8jap.css");
 @import url("https://use.typekit.net/qcu4zrh.css");
 @import url("https://use.typekit.net/fei0gky.css");
@@ -18,3 +21,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities; 
+
