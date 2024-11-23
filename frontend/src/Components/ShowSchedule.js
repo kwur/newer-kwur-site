@@ -173,7 +173,6 @@ const ShowSchedule = () => {
                                     </>
                                     :
                                 daysOfWeek.map((dayOfWeek) => {
-                                    console.log(shows)
                                     const showsOnThisDay = shows[dayOfWeek];
                                     if (showsOnThisDay) {
                                         // one row of columns
@@ -215,7 +214,6 @@ const ShowSchedule = () => {
                                                     const color = genresToColors[showNow.genre.toLowerCase()]
                                                         ? genresToColors[showNow.genre.toLowerCase()]
                                                         : "pink";
-                                                    console.log(showNow)
                                                     return (
                                                         <div
                                                         style={{
