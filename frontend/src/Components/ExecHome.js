@@ -19,7 +19,6 @@ const ExecHome = () => {
     const navigate = useNavigate()
     useEffect(() => {
         getLoggedInUser().then(u => {
-            console.log(u)
             if(u === 1) {
                 navigate("/login")
             }
