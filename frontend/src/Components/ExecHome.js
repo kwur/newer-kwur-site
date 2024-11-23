@@ -25,7 +25,6 @@ const ExecHome = () => {
             setLoading(false)
             if(!user) {
                 setUser(u)
-                console.log(u)
             }
         })
     })
