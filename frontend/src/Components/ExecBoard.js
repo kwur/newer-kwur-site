@@ -17,7 +17,7 @@ const ExecBoard = () => {
         productioncoordinator: "Production Coordinator",
         musicdirectorintraining: "Music Director in Training",
         stationmanager: "Station Manager", 
-        webmaster: "Nerd in Charge (Webmaster)"
+        webmaster: "Webmaster"
     }
     const dbNameToEmail = {
         GM: "gm@kwur.com",

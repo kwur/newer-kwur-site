@@ -115,3 +115,17 @@ export function changeScheduler(oldStatus, newStatus) {
         console.log(e)
     })
 }
+
+export function dropAllShows() {
+    const token = localStorage.getItem("token")
+    if(!token) {
+        return Promise.resolve(1)
+    }
+    return axios.get(url + "/resetShows", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    }).then(result => result.status === 200).catch(e => {
+        console.log(e)
+    })
+}
